@@ -13,7 +13,7 @@ client = OpenAI(
     api_key=API_KEY,
     base_url=BASE_URL
 )
-all_test_data = parse_jsonl('FCMBench_v1.0_testset.jsonl')
+all_test_data = parse_jsonl('FCMBench_v1.0_testset_small.jsonl')
 test_data = all_test_data[0]
 
 
