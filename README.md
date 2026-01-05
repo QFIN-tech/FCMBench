@@ -41,5 +41,13 @@ Image-based financial document understanding:
 
 ## Citation
 ```
-waiting arxiv preprint
+@misc{yang2026fcmbenchcomprehensivefinancialcredit,
+      title={FCMBench: A Comprehensive Financial Credit Multimodal Benchmark for Real-world Applications}, 
+      author={Yehui Yang and Dalu Yang and Wenshuo Zhou and Fangxin Shang and Yifan Liu and Jie Ren and Haojun Fei and Qing Yang and Tao Chen},
+      year={2026},
+      eprint={2601.00150},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2601.00150}, 
+}
 ```
