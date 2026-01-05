@@ -1,0 +1,10 @@
+[project]
+name = "fcmbench"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=2.14.0",
+    "pandas>=2.3.3",
+]
