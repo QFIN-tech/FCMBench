@@ -24,8 +24,8 @@ Image-based financial document understanding:
 - **Evaluation:** [Evaluation Script](vision_language/evaluation.py)
 
 #### Paper & Project Links
-- **Paper (arXiv):** [FILL_ARXIV_LINK]
-- **Paper (PDF):** [FILL_PDF_LINK]
+- **Paper (arXiv):** [https://arxiv.org/abs/2601.00150]
+- **Paper (PDF):** [https://arxiv.org/pdf/2601.00150]
 - **Project Page:** [https://github.com/QFIN-tech/FCMBench/tree/main/vision_language]
 - **Leaderboard:** [FILL_LEADERBOARD_LINK]
 - **Dataset (ModelScope):** [https://modelscope.cn/datasets/QFIN/FCMBench-V1.0]
