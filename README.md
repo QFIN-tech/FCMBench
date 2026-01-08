@@ -31,7 +31,15 @@ Image-based financial document understanding:
 - [**Dataset (ModelScope)**](https://modelscope.cn/datasets/QFIN/FCMBench-V1.0)
 - [**Dataset (Hugging Face)**](https://huggingface.co/datasets/QFIN/FCMBench-V1.0)
 
+#### Reference Model Demo
+We also provide access to an interactive demo of our internal reference vision-language model, which achieves strong performance on FCMBench-V1.0.
+If you are interested in trying the Gradio demo, please contact [yangyehui-jk@qifu.com] with the following information:
+- Name
+- Affiliation / Organization
+- Intended use (e.g., research exploration, benchmarking reference)
+- Contact email
 
+Access will be granted on a case-by-case basis.
 
 ### 2) Video Understanding Track (🕒 Coming Soon)
 
