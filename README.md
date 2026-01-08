@@ -32,7 +32,7 @@ Image-based financial document understanding:
 - [**Dataset (Hugging Face)**](https://huggingface.co/datasets/QFIN/FCMBench-V1.0)
 
 #### Reference Model Demo
-We also provide access to an interactive demo of our internal reference vision-language model, which achieves strong performance on FCMBench-V1.0.
+We also provide access to an interactive demo of our Qfin-VL-Instruct model, which achieves strong performance on FCMBench-V1.0.
 If you are interested in trying the Gradio demo, please contact [yangyehui-jk@qifu.com] with the following information:
 - Name
 - Affiliation / Organization
