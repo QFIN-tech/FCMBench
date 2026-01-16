@@ -59,3 +59,7 @@ Access will be granted on a case-by-case basis.
       url={https://arxiv.org/abs/2601.00150}, 
 }
 ```
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=QFIN-tech/FCMBench&type=date&legend=top-left)](https://www.star-history.com/#QFIN-tech/FCMBench&type=date&legend=top-left)
