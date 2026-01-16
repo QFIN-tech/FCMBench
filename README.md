@@ -3,6 +3,8 @@
 
 **FCMBench** is a multimodal benchmark for credit-risk–oriented workflows. It aims to provide a standard playground to promote collaborative development between academia and industry and provides standardized datasets, prompts, and evaluation scripts across multiple tracks (image, video, speech, agents, etc.)
 
+[简体中文](./README_cn.md)
+
 ## 🔥 News 
 - 【**2026. 01. 01**】✨ We are proud to launch [**FCMBench-V1.0**](https://github.com/QFIN-tech/FCMBench/tree/main/vision_language), which covers 18 core certificate types, including 4,043 privacy-compliant images and 8,446 QA samples. It involves 3 types of Perception tasks and 4 types of Reasoning tasks, which are cross-referenced with 10 categories of robustness inferences. All the tasks and inferences are derived from real-world critical scenarios.
 
