@@ -75,7 +75,7 @@ Where:
 To join the FCMBench leaderboard:
 1.	Run inference on ```FCMBench_v1.0_testset_full.jsonl```
 2.	Save your predictions to a JSONL file (same format as the example)
-3.	Email the JSONL file to [yangyehui-jk@qifu.com] with the following information:
+3.	Email the JSONL file to [yangyehuisw@126.com] with the following information:
 	•	Model name / version
 	•	Inference framework (or API) and key settings (e.g., temperature, max tokens)
 	•	Any special post-processing (if applicable)
