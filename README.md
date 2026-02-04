@@ -10,7 +10,7 @@
 
 > **Status:** Public release (v1.0).  
 > **Maintainers:** [奇富科技 / Qfin Holdings](https://github.com/QFIN-tech)  
-> **Contact:** [yangyehui-jk@qifu.com]
+> **Contact:** [yangyehuisw@126.com]
 
 ---
 
