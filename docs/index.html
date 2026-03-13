@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCMBench Benchmark Leaderboard</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --panel: rgba(255, 255, 255, 0.96);
+      --panel-strong: #ffffff;
+      --ink: #121736;
+      --muted: #b7b9c2;
+      --line: #d9dbe3;
+      --accent: #00b85c;
+      --accent-soft: #e8fff2;
+      --accent-strong: #00984c;
+      --gold: #fccc0c;
+      --gold-soft: #fff8db;
+      --focus: #121736;
+      --navy-soft: #f4f6fb;
+      --shadow: 0 18px 42px rgba(18, 23, 54, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(0, 184, 92, 0.12), transparent 23rem),
+        radial-gradient(circle at 88% 14%, rgba(252, 204, 12, 0.14), transparent 20rem),
+        linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+      font-family: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 16px 48px;
+    }
+
+    .hero {
+      padding: 24px;
+      border: 2px solid var(--line);
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(244, 255, 249, 0.96)),
+        linear-gradient(90deg, rgba(0, 184, 92, 0.08), rgba(252, 204, 12, 0.06));
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent-strong);
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .meta-chip {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+      font-size: 0.88rem;
+      color: #7f8393;
+    }
+
+    .controls {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .hero-links {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .hero-link:hover,
+    .hero-link:focus-visible {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .toggle {
+      display: inline-flex;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .toggle button {
+      border: 0;
+      background: transparent;
+      color: #7f8393;
+      padding: 10px 16px;
+      font: inherit;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+
+    .toggle button.active {
+      background: var(--accent);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .card {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      min-height: 132px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+    }
+
+    .card-label {
+      margin: 0 0 8px;
+      color: #7f8393;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .card h2,
+    .card h3 {
+      margin: 0;
+    }
+
+    .leader-name {
+      font-size: 1.18rem;
+      line-height: 1.2;
+    }
+
+    .leader-name a {
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .leader-name a:hover,
+    .leader-name a:focus-visible {
+      border-bottom-color: currentColor;
+      outline: none;
+    }
+
+    .leader-score {
+      margin-top: 10px;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.04em;
+    }
+
+    .leader-note {
+      margin-top: 6px;
+      color: #7f8393;
+      font-size: 0.92rem;
+    }
+
+    .table-wrap {
+      margin-top: 18px;
+      overflow: auto;
+      border-radius: 22px;
+      border: 2px solid var(--line);
+      background: var(--panel-strong);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1000px;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f8fafc;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+    }
+
+    thead th button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      text-transform: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+    }
+
+    thead th button:hover,
+    thead th button:focus-visible {
+      color: var(--accent-strong);
+      outline: none;
+    }
+
+    .sort-indicator {
+      min-width: 1em;
+      text-align: right;
+    }
+
+    th,
+    td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #eadfca;
+      text-align: left;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: #fbfcfe;
+    }
+
+    tbody tr:hover {
+      background: var(--gold-soft);
+    }
+
+    .rank {
+      font-weight: 800;
+      color: var(--accent-strong);
+    }
+
+    .model-link {
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .model-link:hover,
+    .model-link:focus-visible {
+      color: var(--accent-strong);
+      outline: none;
+    }
+
+    .num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .max-score {
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    @media (max-width: 900px) {
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">FCMBench v1.2</p>
+      <h1>Benchmark Leaderboard</h1>
+      <div class="hero-links" aria-label="FCMBench resources">
+        <a class="hero-link" href="https://arxiv.org/abs/2601.00150" target="_blank" rel="noreferrer">Paper</a>
+        <a class="hero-link" href="https://github.com/QFIN-tech/FCMBench" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="hero-link" href="https://qfin-tech.github.io/FCMBench/Examples.html" target="_blank" rel="noreferrer">Examples</a>
+      </div>
+      <div class="controls">
+        <div class="toggle" role="tablist" aria-label="Leaderboard split">
+          <button id="tab-full" class="active" type="button" role="tab" aria-selected="true">FULL</button>
+          <button id="tab-small" type="button" role="tab" aria-selected="false">SMALL</button>
+        </div>
+        <div id="table-caption" class="meta-chip">Showing FULL leaderboard</div>
+      </div>
+    </section>
+
+    <section class="summary" aria-label="Leaderboard summary">
+      <article class="card">
+        <p class="card-label">Leader</p>
+        <h2 id="leader-name" class="leader-name"></h2>
+        <div id="leader-score" class="leader-score"></div>
+        <div id="leader-note" class="leader-note"></div>
+      </article>
+      <article class="card">
+        <p class="card-label">Second Place</p>
+        <h3 id="runnerup-name" class="leader-name"></h3>
+        <div id="runnerup-score" class="leader-score"></div>
+        <div id="runnerup-note" class="leader-note"></div>
+      </article>
+      <article class="card">
+        <p class="card-label">Third Place</p>
+        <h3 id="third-name" class="leader-name"></h3>
+        <div id="third-score" class="leader-score"></div>
+        <div id="third-note" class="leader-note"></div>
+      </article>
+    </section>
+
+    <section class="table-wrap" aria-label="Leaderboard table">
+      <table>
+        <thead>
+          <tr>
+            <th><button type="button" data-sort-key="rank">Rank <span class="sort-indicator"></span></button></th>
+            <th><button type="button" data-sort-key="name">Model <span class="sort-indicator"></span></button></th>
+            <th class="num"><button type="button" data-sort-key="average">Average <span class="sort-indicator"></span></button></th>
+            <th class="num"><button type="button" data-sort-key="IQE">IQE <span class="sort-indicator"></span></button></th>
+            <th class="num"><button type="button" data-sort-key="DTR">DTR <span class="sort-indicator"></span></button></th>
+            <th class="num"><button type="button" data-sort-key="KIE">KIE <span class="sort-indicator"></span></button></th>
+            <th class="num"><button type="button" data-sort-key="CC">CC <span class="sort-indicator"></span></button></th>
+            <th class="num"><button type="button" data-sort-key="VC">VC <span class="sort-indicator"></span></button></th>
+            <th class="num"><button type="button" data-sort-key="NC">NC <span class="sort-indicator"></span></button></th>
+            <th class="num"><button type="button" data-sort-key="RR">RR <span class="sort-indicator"></span></button></th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const leaderboardData = {"full":[{"id":"gemini3pro","name":"Gemini 3 Pro","link":"https://deepmind.google/models/gemini/","average":65.16,"DTR":90.68,"KIE":43.36,"IQE":44.83,"CC":60.68,"VC":87.27,"NC":59.75,"RR":69.56,"rank":1},{"id":"gemini3flash","name":"Gemini 3 Flash","link":"https://deepmind.google/models/gemini/","average":64.94,"DTR":95.32,"KIE":43.99,"IQE":52.19,"CC":69.93,"VC":73.06,"NC":57.26,"RR":62.82,"rank":2},{"id":"kimik2.5","name":"Kimi-K2.5","link":"https://www.moonshot.ai/","average":60.58,"DTR":79.07,"KIE":45.28,"IQE":45.2,"CC":63.66,"VC":66.65,"NC":55.87,"RR":68.31,"rank":3},{"id":"claude","name":"Claude Opus 4.5","link":"https://www.anthropic.com/claude","average":58.39,"DTR":84.07,"KIE":40.42,"IQE":44.07,"CC":63.97,"VC":71.21,"NC":43.01,"RR":62.02,"rank":4},{"id":"qwen35-397","name":"Qwen3.5-397B-A17B","link":"https://qwenlm.github.io/","average":53.38,"DTR":73.99,"KIE":38.79,"IQE":38.28,"CC":54.75,"VC":71.87,"NC":50.16,"RR":45.8,"rank":5},{"id":"qwen235b","name":"Qwen3-VL-235B-A22B-Instruct","link":"https://huggingface.co/Qwen/Qwen3-VL-235B-A22B-Instruct","average":52.03,"DTR":66.65,"KIE":42.07,"IQE":45.62,"CC":62.65,"VC":57.37,"NC":39.89,"RR":49.97,"rank":6},{"id":"qwen32b","name":"Qwen3-VL-32B-Instruct","link":"https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct","average":51.48,"DTR":54.28,"KIE":42.66,"IQE":46.51,"CC":65.53,"VC":60.8,"NC":35.93,"RR":54.65,"rank":7},{"id":"qwen35-35","name":"Qwen3.5-35B-A3B","link":"https://qwenlm.github.io/","average":50.86,"DTR":63.77,"KIE":44.3,"IQE":40.76,"CC":49.89,"VC":54.38,"NC":54.71,"RR":48.18,"rank":8},{"id":"qwen35-122","name":"Qwen3.5-122B-A10B","link":"https://qwenlm.github.io/","average":50.66,"DTR":59.82,"KIE":45.24,"IQE":44.45,"CC":41.96,"VC":58.04,"NC":54.64,"RR":50.45,"rank":9},{"id":"glm4.5","name":"GLM-4.5V","link":"https://www.z.ai/","average":48.88,"DTR":57.6,"KIE":38,"IQE":40.82,"CC":59.29,"VC":61.16,"NC":39.7,"RR":45.56,"rank":10},{"id":"gpt5.2","name":"GPT 5.2","link":"https://openai.com/gpt-5/","average":48.37,"DTR":59.2,"KIE":35.47,"IQE":45.4,"CC":59.34,"VC":60.05,"NC":30.02,"RR":49.1,"rank":11},{"id":"glm4.6","name":"GLM-4.6V","link":"https://www.z.ai/","average":48.12,"DTR":62.89,"KIE":39.63,"IQE":37.38,"CC":62.49,"VC":60.6,"NC":32.32,"RR":41.57,"rank":12},{"id":"ovis2.5","name":"Ovis2.5","link":"https://huggingface.co/AIDC-AI","average":44.16,"DTR":52,"KIE":29.38,"IQE":34.45,"CC":47.91,"VC":57.32,"NC":32.1,"RR":55.93,"rank":13},{"id":"qwen8b","name":"Qwen3-VL-8B-Instruct","link":"https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct","average":44.08,"DTR":48.8,"KIE":33.74,"IQE":37.94,"CC":54.81,"VC":52.08,"NC":29.98,"RR":51.24,"rank":14},{"id":"gpt5.1","name":"GPT 5.1","link":"https://openai.com/gpt-5/","average":43.78,"DTR":72.29,"KIE":31.75,"IQE":37.73,"CC":40.58,"VC":59.16,"NC":20.99,"RR":43.98,"rank":15},{"id":"internvl241b","name":"InternVL-3.5-241B-A28B","link":"https://internvl.github.io/","average":42.26,"DTR":61.27,"KIE":32.84,"IQE":31.93,"CC":43.9,"VC":54.46,"NC":26.48,"RR":44.94,"rank":16},{"id":"internvl38b","name":"InternVL-3.5-38B","link":"https://internvl.github.io/","average":40.95,"DTR":64.13,"KIE":30.69,"IQE":36.35,"CC":34.99,"VC":52.76,"NC":22.48,"RR":45.27,"rank":17},{"id":"qwen30b","name":"Qwen3-VL-30B-A3B-Instruct","link":"https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct","average":40.48,"DTR":42.49,"KIE":31.48,"IQE":34.14,"CC":42.28,"VC":55.36,"NC":26.04,"RR":51.59,"rank":18},{"id":"internvl30b","name":"InternVL-3.5-30B-A3B","link":"https://internvl.github.io/","average":40.2,"DTR":50.87,"KIE":28.31,"IQE":34.73,"CC":39.47,"VC":55.03,"NC":21.84,"RR":51.18,"rank":19},{"id":"llama","name":"Llama-4-Maverick","link":"https://www.llama.com/","average":38.44,"DTR":37.47,"KIE":27.5,"IQE":41.43,"CC":34.68,"VC":59.78,"NC":27.64,"RR":40.54,"rank":20},{"id":"minimax","name":"MiniMax-VL-01","link":"https://huggingface.co/MiniMaxAI","average":38.28,"DTR":35.85,"KIE":28.65,"IQE":42.43,"CC":34.51,"VC":55.99,"NC":25.87,"RR":44.65,"rank":21},{"id":"internvl8b","name":"InternVL-3.5-8B","link":"https://internvl.github.io/","average":37.82,"DTR":50.69,"KIE":26.72,"IQE":26.44,"CC":40.63,"VC":55.86,"NC":19.46,"RR":44.94,"rank":22},{"id":"minicpm","name":"MiniCPM-V 4.5","link":"https://huggingface.co/openbmb/MiniCPM-V-4_5","average":36.65,"DTR":51.5,"KIE":23.19,"IQE":33.34,"CC":36.07,"VC":47.47,"NC":20.07,"RR":44.94,"rank":23},{"id":"kimivl","name":"Kimi-VL","link":"https://www.moonshot.ai/","average":34.82,"DTR":47.16,"KIE":26.59,"IQE":21.65,"CC":35.36,"VC":52.49,"NC":15.56,"RR":44.94,"rank":24},{"id":"deepseek","name":"DeepSeek-OCR + DeepSeek V3.2","link":"https://www.deepseek.com/","average":34.01,"DTR":43.05,"KIE":29,"IQE":10.57,"CC":29.51,"VC":49.48,"NC":23.73,"RR":52.76,"rank":25},{"id":"llava","name":"LLaVA-OneVision-1.5","link":"https://llava-vl.github.io/","average":32.85,"DTR":25.54,"KIE":28.75,"IQE":19.31,"CC":28.84,"VC":58.66,"NC":23.93,"RR":44.94,"rank":26},{"id":"janus","name":"Janus-Pro","link":"https://huggingface.co/deepseek-ai/Janus-Pro-7B","average":27.09,"DTR":10.78,"KIE":10.87,"IQE":11.77,"CC":56.84,"VC":39.67,"NC":14.73,"RR":44.94,"rank":27},{"id":"phi4","name":"Phi-4-multimodal-instruct","link":"https://huggingface.co/microsoft/Phi-4-multimodal-instruct","average":24.54,"DTR":24.46,"KIE":20.84,"IQE":14.44,"CC":28.11,"VC":37.23,"NC":0.87,"RR":45.8,"rank":28}],"small":[{"id":"gemini3flash","name":"Gemini 3 Flash","link":"https://deepmind.google/models/gemini/","average":65.71,"DTR":95.37,"KIE":41.96,"IQE":54.22,"CC":66.97,"VC":76.84,"NC":55.1,"RR":69.52,"rank":1},{"id":"gemini3pro","name":"Gemini 3 Pro","link":"https://deepmind.google/models/gemini/","average":64.2,"DTR":90.29,"KIE":45.09,"IQE":47.02,"CC":59.03,"VC":84.02,"NC":55.81,"RR":68.17,"rank":2},{"id":"kimik2.5","name":"Kimi-K2.5","link":"https://www.moonshot.ai/","average":60.13,"DTR":78.36,"KIE":43.65,"IQE":47.02,"CC":66.15,"VC":66.26,"NC":51.81,"RR":67.62,"rank":3},{"id":"claude","name":"Claude Opus 4.5","link":"https://www.anthropic.com/claude","average":58.34,"DTR":83.82,"KIE":39.15,"IQE":43.87,"CC":65.29,"VC":66.68,"NC":42.79,"RR":66.75,"rank":4},{"id":"qwen35-397","name":"Qwen3.5-397B-A17B","link":"https://qwenlm.github.io/","average":52.79,"DTR":73.08,"KIE":34.66,"IQE":36.97,"CC":55.91,"VC":71.49,"NC":47.37,"RR":50.08,"rank":5},{"id":"qwen32b","name":"Qwen3-VL-32B-Instruct","link":"https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct","average":52.26,"DTR":54.47,"KIE":40.06,"IQE":46.7,"CC":66.17,"VC":61.6,"NC":34.11,"RR":62.7,"rank":6},{"id":"qwen235b","name":"Qwen3-VL-235B-A22B-Instruct","link":"https://huggingface.co/Qwen/Qwen3-VL-235B-A22B-Instruct","average":50.91,"DTR":66.06,"KIE":37.38,"IQE":43.25,"CC":63.74,"VC":59.64,"NC":38.07,"RR":48.25,"rank":7},{"id":"glm4.5","name":"GLM-4.5V","link":"https://www.z.ai/","average":50.71,"DTR":58.98,"KIE":37.53,"IQE":41.66,"CC":67.13,"VC":58.96,"NC":41.65,"RR":49.05,"rank":8},{"id":"qwen35-122","name":"Qwen3.5-122B-A10B","link":"https://qwenlm.github.io/","average":49.83,"DTR":57.45,"KIE":41.87,"IQE":42.31,"CC":41.05,"VC":56.38,"NC":51.88,"RR":57.86,"rank":9},{"id":"qwen35-35","name":"Qwen3.5-35B-A3B","link":"https://qwenlm.github.io/","average":49.71,"DTR":64.27,"KIE":42.06,"IQE":42.92,"CC":44.24,"VC":53.31,"NC":57.19,"RR":43.97,"rank":10},{"id":"gpt5.2","name":"GPT 5.2","link":"https://openai.com/gpt-5/","average":48.14,"DTR":62.14,"KIE":31.98,"IQE":46.7,"CC":60.94,"VC":53.05,"NC":28.91,"RR":53.25,"rank":11},{"id":"glm4.6","name":"GLM-4.6V","link":"https://www.z.ai/","average":48.07,"DTR":64.07,"KIE":37.62,"IQE":34.46,"CC":65.65,"VC":57.61,"NC":33.11,"RR":43.97,"rank":12},{"id":"ovis2.5","name":"Ovis2.5","link":"https://huggingface.co/AIDC-AI","average":45.47,"DTR":54.05,"KIE":28.5,"IQE":34.79,"CC":47.96,"VC":59.32,"NC":31.11,"RR":62.54,"rank":13},{"id":"qwen8b","name":"Qwen3-VL-8B-Instruct","link":"https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct","average":44.26,"DTR":49.21,"KIE":31.4,"IQE":36.35,"CC":58.83,"VC":52.12,"NC":26.98,"RR":54.92,"rank":14},{"id":"qwen30b","name":"Qwen3-VL-30B-A3B-Instruct","link":"https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct","average":43.01,"DTR":42.98,"KIE":33.03,"IQE":37.88,"CC":47.66,"VC":53.08,"NC":29.87,"RR":56.59,"rank":15},{"id":"internvl241b","name":"InternVL-3.5-241B-A28B","link":"https://internvl.github.io/","average":42.58,"DTR":61.21,"KIE":31.37,"IQE":31.37,"CC":49.78,"VC":54.69,"NC":25.71,"RR":43.97,"rank":16},{"id":"gpt5.1","name":"GPT 5.1","link":"https://openai.com/gpt-5/","average":42.28,"DTR":74.26,"KIE":31.71,"IQE":34.17,"CC":43.89,"VC":53.75,"NC":20.63,"RR":37.54,"rank":17},{"id":"internvl30b","name":"InternVL-3.5-30B-A3B","link":"https://internvl.github.io/","average":40.14,"DTR":48.71,"KIE":27.27,"IQE":32.93,"CC":41.4,"VC":55.91,"NC":24.31,"RR":50.48,"rank":18},{"id":"llama","name":"Llama-4-Maverick","link":"https://www.llama.com/","average":39.54,"DTR":38.25,"KIE":25.12,"IQE":48.91,"CC":42.99,"VC":57.78,"NC":23.64,"RR":40.08,"rank":19},{"id":"internvl38b","name":"InternVL-3.5-38B","link":"https://internvl.github.io/","average":39.1,"DTR":64.42,"KIE":29.17,"IQE":33.23,"CC":35.67,"VC":47.79,"NC":22.22,"RR":41.19,"rank":20},{"id":"minimax","name":"MiniMax-VL-01","link":"https://huggingface.co/MiniMaxAI","average":37.25,"DTR":34.28,"KIE":25.5,"IQE":38.89,"CC":36.9,"VC":55.82,"NC":25.41,"RR":43.97,"rank":21},{"id":"internvl8b","name":"InternVL-3.5-8B","link":"https://internvl.github.io/","average":37.23,"DTR":50.57,"KIE":26.91,"IQE":26.95,"CC":41.35,"VC":51.75,"NC":19.09,"RR":43.97,"rank":22},{"id":"minicpm","name":"MiniCPM-V 4.5","link":"https://huggingface.co/openbmb/MiniCPM-V-4_5","average":36.75,"DTR":50.54,"KIE":22.55,"IQE":35.41,"CC":41.43,"VC":44.66,"NC":18.71,"RR":43.97,"rank":23},{"id":"llava","name":"LLaVA-OneVision-1.5","link":"https://llava-vl.github.io/","average":34.1,"DTR":24.05,"KIE":30.69,"IQE":27.3,"CC":26.03,"VC":62.29,"NC":24.38,"RR":43.97,"rank":24},{"id":"kimivl","name":"Kimi-VL","link":"https://www.moonshot.ai/","average":33.91,"DTR":46.29,"KIE":24.65,"IQE":16.3,"CC":36.18,"VC":51.24,"NC":18.7,"RR":43.97,"rank":25},{"id":"deepseek","name":"DeepSeek-OCR + DeepSeek V3.2","link":"https://www.deepseek.com/","average":33.85,"DTR":44.37,"KIE":28.48,"IQE":12.85,"CC":26.06,"VC":45.08,"NC":22.66,"RR":57.46,"rank":26},{"id":"janus","name":"Janus-Pro","link":"https://huggingface.co/deepseek-ai/Janus-Pro-7B","average":26.92,"DTR":10.91,"KIE":7.69,"IQE":16.27,"CC":54.6,"VC":39.73,"NC":15.24,"RR":43.97,"rank":27},{"id":"phi4","name":"Phi-4-multimodal-instruct","link":"https://huggingface.co/microsoft/Phi-4-multimodal-instruct","average":22.67,"DTR":24.02,"KIE":16.74,"IQE":15.65,"CC":21.92,"VC":36.43,"NC":0,"RR":43.97,"rank":28}]};
+    const body = document.getElementById("leaderboard-body");
+    const caption = document.getElementById("table-caption");
+    const tabFull = document.getElementById("tab-full");
+    const tabSmall = document.getElementById("tab-small");
+    const sortButtons = Array.from(document.querySelectorAll("thead button[data-sort-key]"));
+
+    const leaderName = document.getElementById("leader-name");
+    const leaderScore = document.getElementById("leader-score");
+    const leaderNote = document.getElementById("leader-note");
+    const runnerupName = document.getElementById("runnerup-name");
+    const runnerupScore = document.getElementById("runnerup-score");
+    const runnerupNote = document.getElementById("runnerup-note");
+    const thirdName = document.getElementById("third-name");
+    const thirdScore = document.getElementById("third-score");
+    const thirdNote = document.getElementById("third-note");
+
+    const metricColumns = ["average", "IQE", "DTR", "KIE", "CC", "VC", "NC", "RR"];
+    let currentSplit = "full";
+    let currentSortKey = "average";
+    let currentSortDirection = "desc";
+
+    function formatScore(value) {
+      return Number(value).toFixed(2);
+    }
+
+    function linkedName(entry) {
+      return `<a href="${entry.link}" target="_blank" rel="noreferrer">${entry.name}</a>`;
+    }
+
+    function fillSummary(entries, splitKey) {
+      const [first, second, third] = entries;
+      const splitLabel = splitKey.toUpperCase();
+
+      leaderName.innerHTML = linkedName(first);
+      leaderScore.textContent = `${formatScore(first.average)}`;
+      leaderNote.textContent = `${splitLabel} leader with strong ${first.DTR.toFixed(2)} DTR and ${first.VC.toFixed(2)} VC.`;
+
+      runnerupName.innerHTML = linkedName(second);
+      runnerupScore.textContent = `${formatScore(second.average)}`;
+      runnerupNote.textContent = `${(first.average - second.average).toFixed(2)} points behind rank 1.`;
+
+      thirdName.innerHTML = linkedName(third);
+      thirdScore.textContent = `${formatScore(third.average)}`;
+      thirdNote.textContent = `${(second.average - third.average).toFixed(2)} points behind rank 2.`;
+    }
+
+    function updateSortIndicators() {
+      for (const button of sortButtons) {
+        const indicator = button.querySelector(".sort-indicator");
+        if (button.dataset.sortKey === currentSortKey) {
+          indicator.textContent = currentSortDirection === "asc" ? "▲" : "▼";
+        } else {
+          indicator.textContent = "";
+        }
+      }
+    }
+
+    function sortEntries(entries) {
+      const sorted = [...entries];
+      sorted.sort((a, b) => {
+        const aValue = a[currentSortKey];
+        const bValue = b[currentSortKey];
+
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          const comparison = aValue.localeCompare(bValue);
+          return currentSortDirection === "asc" ? comparison : -comparison;
+        }
+
+        if (aValue === bValue) {
+          return a.rank - b.rank;
+        }
+
+        return currentSortDirection === "asc" ? aValue - bValue : bValue - aValue;
+      });
+      return sorted;
+    }
+
+    function maxScores(entries) {
+      const maxByColumn = {};
+      for (const metric of metricColumns) {
+        maxByColumn[metric] = Math.max(...entries.map((entry) => entry[metric]));
+      }
+      return maxByColumn;
+    }
+
+    function render() {
+      const entries = sortEntries(leaderboardData[currentSplit]);
+      const maxima = maxScores(leaderboardData[currentSplit]);
+
+      tabFull.classList.toggle("active", currentSplit === "full");
+      tabSmall.classList.toggle("active", currentSplit === "small");
+      tabFull.setAttribute("aria-selected", String(currentSplit === "full"));
+      tabSmall.setAttribute("aria-selected", String(currentSplit === "small"));
+      caption.textContent = `Showing ${currentSplit.toUpperCase()} leaderboard`;
+      updateSortIndicators();
+
+      body.innerHTML = entries.map((entry) => `
+        <tr>
+          <td class="rank">${entry.rank}</td>
+          <td><a class="model-link" href="${entry.link}" target="_blank" rel="noreferrer">${entry.name}</a></td>
+          <td class="num ${entry.average === maxima.average ? "max-score" : ""}">${formatScore(entry.average)}</td>
+          <td class="num ${entry.IQE === maxima.IQE ? "max-score" : ""}">${formatScore(entry.IQE)}</td>
+          <td class="num ${entry.DTR === maxima.DTR ? "max-score" : ""}">${formatScore(entry.DTR)}</td>
+          <td class="num ${entry.KIE === maxima.KIE ? "max-score" : ""}">${formatScore(entry.KIE)}</td>
+          <td class="num ${entry.CC === maxima.CC ? "max-score" : ""}">${formatScore(entry.CC)}</td>
+          <td class="num ${entry.VC === maxima.VC ? "max-score" : ""}">${formatScore(entry.VC)}</td>
+          <td class="num ${entry.NC === maxima.NC ? "max-score" : ""}">${formatScore(entry.NC)}</td>
+          <td class="num ${entry.RR === maxima.RR ? "max-score" : ""}">${formatScore(entry.RR)}</td>
+        </tr>
+      `).join("");
+
+      fillSummary(leaderboardData[currentSplit], currentSplit);
+      window.location.hash = currentSplit;
+    }
+
+    tabFull.addEventListener("click", () => {
+      currentSplit = "full";
+      render();
+    });
+    tabSmall.addEventListener("click", () => {
+      currentSplit = "small";
+      render();
+    });
+
+    for (const button of sortButtons) {
+      button.addEventListener("click", () => {
+        const nextKey = button.dataset.sortKey;
+        if (currentSortKey === nextKey) {
+          currentSortDirection = currentSortDirection === "asc" ? "desc" : "asc";
+        } else {
+          currentSortKey = nextKey;
+          currentSortDirection = nextKey === "name" ? "asc" : "desc";
+        }
+        render();
+      });
+    }
+
+    currentSplit = window.location.hash === "#small" ? "small" : "full";
+    render();
+  </script>
+</body>
+</html>

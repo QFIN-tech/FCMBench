@@ -67,19 +67,19 @@ def flatten_json(data, prefix=""):
     return items
 
 
-def calculate_metrics(pred_json, gt_json, doc_id=None):
+def calculate_metrics(pred_json, gt_json, subtask=None):
     def filter_present_categories(obj):
         return {"present_categories": obj.get("present_categories", [])} if isinstance(obj, dict) else {}
 
-    if doc_id and doc_id.startswith("DTR_003"):
+    if subtask and subtask.endswith("doc_cla_003"):
         pred_json = filter_present_categories(pred_json)
         gt_json = filter_present_categories(gt_json)
 
-    if doc_id and (doc_id.startswith("NC_001") or doc_id.startswith("NC_002")):
+    if subtask and (subtask.endswith("num_cal_001") or subtask.endswith("num_cal_002")):
         if pred_json is None:
             return None
         try:
-            return 1.0 if abs(float(pred_json) - float(gt_json)) <= 2 else 0.0
+            return 1.0 if abs(float(pred_json) - float(gt_json)) <=2 else 0.0
         except Exception:
             return 0.0
 
@@ -106,15 +106,18 @@ def evaluate_samples(pred_file, gt_file):
     raw_scores = []
     for pred_data in predictions:
         doc_id = pred_data['id']
+        if doc_id not in gt_map:
+            continue
+        subtask = gt_map[doc_id]['subtask']
         # task NC_005 is currently under construction
-        if doc_id.startswith('NC_005'): 
+        if subtask.endswith('num_cal_005'): 
             continue
         pred_json = extract_json_content(pred_data['response'])
         gt_json = json.loads(gt_map[doc_id]['response'])
         pred_json = unwrap_answer(pred_json)
         gt_json = unwrap_answer(gt_json)
         
-        f1 = calculate_metrics(pred_json, gt_json, doc_id)
+        f1 = calculate_metrics(pred_json, gt_json, subtask)
         raw_score = {
             "id": doc_id,
             "task": gt_map[doc_id]['task'],
@@ -122,6 +125,7 @@ def evaluate_samples(pred_file, gt_file):
             "robustness": gt_map[doc_id]['robustness'],
             "f1": f1
         }
+
         raw_scores.append(raw_score)
     return raw_scores
 
@@ -136,14 +140,14 @@ def evaluate_tasks(raw_scores):
         subtask_mean.groupby("task", as_index=False)
                     .agg(task_f1=("subtask_f1_mean", "mean"))
     )
-    order = ["DTR", "KIE", "IQE", "CC", "VC", "NC", "RR"] 
+    order = ["IQE", "DTR", "KIE", "CC", "VC", "NC", "RR"] 
     task_mean_sorted = (
         task_mean.assign(task=pd.Categorical(task_mean["task"], categories=order, ordered=True))
                 .sort_values("task")
                 .reset_index(drop=True)
     )
     print("Performance by Task:\n", task_mean_sorted)
-    return task_mean_sorted['task_f1'].mean()
+    return task_mean_sorted #['task_f1'].mean()
 
 
 def evaluate_robustness(raw_scores):
@@ -161,40 +165,6 @@ def evaluate_robustness(raw_scores):
                 .agg(task_f1=("subtask_f1_mean", "mean"))
     )
     normal_overall_mean = normal_task_mean["task_f1"].mean()
-
-    sec_keys = (
-        subtask_mean.loc[subtask_mean["robustness"].eq("Secondary Captures"), ["task", "subtask"]]
-                .drop_duplicates()
-    )
-    sec_normal_sub_mean = (
-        subtask_mean[subtask_mean["robustness"].eq("Normal Captures")]
-        .merge(sec_keys, on=["task", "subtask"], how="inner")
-    )
-    sec_normal_task_mean = (
-        sec_normal_sub_mean.groupby("task", as_index=False)
-                    .agg(task_f1=("subtask_f1_mean", "mean"))
-    )
-    sec_normal_overall_mean = sec_normal_task_mean["task_f1"].mean()
-    
-    multi_subtask_mean = (
-        df.loc[df["subtask"].isin([
-            "DTR_001_001", 
-            "DTR_003_001",
-            "KIE_002_001",
-            ])]  
-        .groupby(["robustness", "task", "subtask"], as_index=False)
-        .agg(subtask_f1_mean=("f1", "mean"))
-    )
-
-    multi_normal_sub_mean = (
-        multi_subtask_mean[multi_subtask_mean["robustness"].eq("Normal Captures")]
-    )
-    multi_normal_task_mean = (
-        multi_normal_sub_mean.groupby("task", as_index=False)
-                    .agg(task_f1=("subtask_f1_mean", "mean"))
-    )
-    multi_normal_overall_mean = multi_normal_task_mean["task_f1"].mean()
-
     task_mean = (
         subtask_mean.groupby(["robustness", "task"], as_index=False)
                     .agg(task_f1=("subtask_f1_mean", "mean"))
@@ -205,20 +175,16 @@ def evaluate_robustness(raw_scores):
                  .sort_values("robustness_macro_f1", ascending=False)
                  .reset_index(drop=True)
     )
-    use_special_denoms = {
-        "Secondary Captures": sec_normal_overall_mean,
-        "Cluttered Background": sec_normal_overall_mean,
-        "Multi-doc Images": multi_normal_overall_mean}  
     robustness_scores = robustness_scores.copy()
-    robustness_scores["normal_denom"] = robustness_scores["robustness"].apply(
-        lambda r: use_special_denoms.get(r, normal_overall_mean)
-    )
+    robustness_scores["normal_denom"] = normal_overall_mean
+
     robustness_scores["relative_to_normal"] = (
         robustness_scores["robustness_macro_f1"] / robustness_scores["normal_denom"]
     )
     robustness_scores = robustness_scores.drop(columns=["normal_denom", "robustness_macro_f1"])
     robustness_scores = robustness_scores.sort_values('relative_to_normal', ascending=False)
     print("Performance by Robustness:\n", robustness_scores)
+    return robustness_scores
 
 
 if __name__ == "__main__":

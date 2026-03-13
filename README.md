@@ -29,7 +29,8 @@ Image-based financial document understanding:
 - [**Paper (arXiv)**](https://arxiv.org/abs/2601.00150)
 - [**Paper (PDF)**](https://arxiv.org/pdf/2601.00150)
 - [**Project Page**](https://github.com/QFIN-tech/FCMBench/tree/main/vision_language)
-- [**Leaderboard**](vision_language/LEADERBOARD.md)
+- [**Leaderboard**](https://qfin-tech.github.io/FCMBench)
+- [**Sample Data**](https://qfin-tech.github.io/FCMBench/Examples.html)
 - [**Dataset (ModelScope)**](https://modelscope.cn/datasets/QFIN/FCMBench-V1.0)
 - [**Dataset (Hugging Face)**](https://huggingface.co/datasets/QFIN/FCMBench-V1.0)
 

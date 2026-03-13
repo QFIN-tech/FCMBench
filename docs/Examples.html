@@ -6,17 +6,19 @@
   <title>FCMBench Supplementary Workflow-Task Map</title>
   <style>
     :root {
-      --bg: #f4efe5;
-      --ink: #1b2430;
-      --muted: #5c6773;
-      --panel: #fff9ef;
-      --line: #d4cab7;
-      --accent: #0b6e4f;
-      --accent-soft: #d6f3e8;
-      --focus: #cc3f0c;
-      --task: #1f3a93;
-      --task-soft: #dce5ff;
-      --shadow: 0 10px 30px rgba(31, 58, 147, 0.12);
+      --bg: #ffffff;
+      --ink: #121736;
+      --muted: #b7b9c2;
+      --panel: rgba(255, 255, 255, 0.96);
+      --line: #d9dbe3;
+      --accent: #00b85c;
+      --accent-soft: #e8fff2;
+      --gold: #fccc0c;
+      --gold-soft: #fff8db;
+      --focus: #121736;
+      --task: #121736;
+      --task-soft: #f4f6fb;
+      --shadow: 0 16px 36px rgba(18, 23, 54, 0.08);
     }
 
     * {
@@ -28,10 +30,10 @@
       min-height: 100vh;
       color: var(--ink);
       background:
-        radial-gradient(circle at 12% 8%, #fef7de 0, #fef7de 220px, transparent 221px),
-        radial-gradient(circle at 86% 22%, #e3f6f0 0, #e3f6f0 190px, transparent 191px),
-        linear-gradient(120deg, #f4efe5 0%, #f8f3ea 46%, #f3efe7 100%);
-      font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+        radial-gradient(circle at 12% 8%, rgba(0, 184, 92, 0.12) 0, rgba(0, 184, 92, 0.12) 220px, transparent 221px),
+        radial-gradient(circle at 86% 22%, rgba(252, 204, 12, 0.14) 0, rgba(252, 204, 12, 0.14) 190px, transparent 191px),
+        linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+      font-family: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
       line-height: 1.4;
     }
 
@@ -43,21 +45,23 @@
 
     .hero {
       border: 2px solid var(--line);
-      background: linear-gradient(135deg, #fffaf1 0%, #fdf4e8 100%);
-      border-radius: 18px;
-      padding: 20px 22px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(244, 255, 249, 0.96)),
+        linear-gradient(90deg, rgba(0, 184, 92, 0.08), rgba(252, 204, 12, 0.06));
+      border-radius: 20px;
+      padding: 22px 24px;
       box-shadow: var(--shadow);
     }
 
     .title {
       margin: 0;
-      font-size: clamp(1.3rem, 2.2vw, 2rem);
-      letter-spacing: 0.03em;
+      font-size: clamp(1.45rem, 2.6vw, 2.3rem);
+      letter-spacing: -0.03em;
     }
 
     .subtitle {
       margin: 6px 0 0;
-      color: var(--muted);
+      color: #7f8393;
       font-size: 0.95rem;
     }
 
@@ -71,7 +75,7 @@
     .panel {
       background: var(--panel);
       border: 2px solid var(--line);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 14px;
       box-shadow: var(--shadow);
     }
@@ -81,6 +85,7 @@
       font-size: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
+      color: var(--ink);
     }
 
     .workflow-list,
@@ -94,23 +99,23 @@
 
     .workflow-item {
       border: 1.8px solid var(--line);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 12px;
-      background: #fffef8;
+      background: #ffffff;
       transition: all 0.18s ease;
       cursor: pointer;
     }
 
     .workflow-item .hint {
       margin-top: 6px;
-      color: var(--muted);
+      color: #7f8393;
       font-size: 0.82rem;
     }
 
     .task-item {
-      border: 1.8px solid #b9c9f7;
-      border-radius: 12px;
-      background: #fcfdff;
+      border: 1.8px solid #d7dfeb;
+      border-radius: 14px;
+      background: #ffffff;
       overflow: hidden;
       transition: all 0.18s ease;
     }
@@ -122,7 +127,7 @@
       padding: 12px;
       text-align: left;
       font-size: 0.95rem;
-      color: #172554;
+      color: var(--ink);
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -155,21 +160,21 @@
 
     .subtask {
       width: 100%;
-      border: 1px solid #bfd0ff;
-      background: #f3f7ff;
+      border: 1px solid #d7dfeb;
+      background: #f7f9fc;
       padding: 8px 10px;
       border-radius: 9px;
       text-align: left;
       cursor: pointer;
       font-size: 0.88rem;
-      color: #1b2f75;
+      color: #153b66;
       transition: all 0.16s ease;
     }
 
     .subtask:hover,
     .subtask:focus-visible {
-      border-color: #6489ff;
-      background: #e8f0ff;
+      border-color: var(--gold);
+      background: var(--gold-soft);
       outline: none;
     }
 
@@ -189,7 +194,7 @@
 
     .legend {
       margin-top: 10px;
-      color: var(--muted);
+      color: #7f8393;
       font-size: 0.83rem;
     }
 
@@ -207,7 +212,7 @@
 
     .modal {
       background: #fff;
-      border: 2px solid #dfd3bf;
+      border: 2px solid var(--line);
       border-radius: 16px;
       max-height: 86vh;
       overflow: auto;
@@ -216,8 +221,8 @@
     .modal-head {
       position: sticky;
       top: 0;
-      background: #fff7eb;
-      border-bottom: 1px solid #dfd3bf;
+      background: #f7f9fc;
+      border-bottom: 1px solid var(--line);
       padding: 12px 14px;
       display: flex;
       justify-content: space-between;
@@ -232,7 +237,7 @@
     }
 
     .close-btn {
-      border: 1px solid #d8c9b0;
+      border: 1px solid var(--line);
       border-radius: 8px;
       background: #fff;
       padding: 6px 10px;
@@ -247,9 +252,9 @@
     }
 
     .block {
-      border: 1px solid #e5d8c6;
+      border: 1px solid var(--line);
       border-radius: 10px;
-      background: #fffdf9;
+      background: #ffffff;
       padding: 9px 10px;
     }
 
@@ -257,7 +262,7 @@
       margin: 0 0 6px;
       font-size: 0.86rem;
       letter-spacing: 0.02em;
-      color: #6b4f2a;
+      color: #00984c;
       text-transform: uppercase;
     }
 
@@ -277,8 +282,8 @@
     }
 
     .image-card {
-      border: 1px solid #dfd3bf;
-      background: #fffcf5;
+      border: 1px solid var(--line);
+      background: #ffffff;
       border-radius: 8px;
       overflow: hidden;
       min-height: 132px;
@@ -291,14 +296,14 @@
       height: 120px;
       object-fit: cover;
       display: block;
-      background: #efe6d4;
+      background: #edf3f9;
       cursor: zoom-in;
     }
 
     .img-fallback {
       padding: 7px;
       font-size: 0.75rem;
-      color: #6b7280;
+      color: #7f8393;
       font-family: "JetBrains Mono", monospace;
       word-break: break-word;
     }
@@ -310,9 +315,9 @@
     }
 
     .lang-card {
-      border: 1px solid #e5d8c6;
+      border: 1px solid var(--line);
       border-radius: 10px;
-      background: #fffdf9;
+      background: #ffffff;
       padding: 9px 10px;
       display: grid;
       gap: 8px;
@@ -322,13 +327,13 @@
       margin: 0;
       font-size: 0.86rem;
       letter-spacing: 0.02em;
-      color: #6b4f2a;
+      color: #00984c;
       text-transform: uppercase;
     }
 
     .lang-meta {
       margin: 0;
-      color: var(--muted);
+      color: #7f8393;
       font-size: 0.78rem;
       font-family: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
     }
@@ -401,8 +406,6 @@
         <ul class="task-list" id="taskList"></ul>
       </article>
     </section>
-
-    <p class="legend">Workflow-task links are based on the correspondence you provided. Each subtask popup shows one Chinese and one English example prompt copied from <code>filtered_data.jsonl</code> (English from <code>en.*</code> entries when available).</p>
   </main>
 
   <dialog id="exampleModal">
