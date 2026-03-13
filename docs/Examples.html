@@ -113,7 +113,7 @@
     }
 
     .task-item {
-      border: 1.8px solid #d7dfeb;
+      border: 1.8px solid #d9dbe3;
       border-radius: 14px;
       background: #ffffff;
       overflow: hidden;
@@ -160,14 +160,14 @@
 
     .subtask {
       width: 100%;
-      border: 1px solid #d7dfeb;
+      border: 1px solid #d9dbe3;
       background: #f7f9fc;
       padding: 8px 10px;
       border-radius: 9px;
       text-align: left;
       cursor: pointer;
       font-size: 0.88rem;
-      color: #153b66;
+      color: var(--ink);
       transition: all 0.16s ease;
     }
 
@@ -190,12 +190,6 @@
       border-color: var(--task);
       background: var(--task-soft);
       transform: translateY(-1px);
-    }
-
-    .legend {
-      margin-top: 10px;
-      color: #7f8393;
-      font-size: 0.83rem;
     }
 
     dialog {
@@ -221,7 +215,7 @@
     .modal-head {
       position: sticky;
       top: 0;
-      background: #f7f9fc;
+      background: #f8fafc;
       border-bottom: 1px solid var(--line);
       padding: 12px 14px;
       display: flex;
@@ -361,9 +355,16 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+      overflow: hidden;
+      user-select: none;
+      touch-action: none;
     }
 
     .image-viewer img {
+      max-width: none;
+      max-height: none;
+      width: auto;
+      height: auto;
       max-width: 95vw;
       max-height: 90vh;
       object-fit: contain;
@@ -371,10 +372,56 @@
       border-radius: 10px;
       background: #111;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+      cursor: grab;
+      transform-origin: center center;
+      will-change: transform;
+      touch-action: none;
     }
 
-    .viewer-caption {
-      display: none;
+    .image-viewer img.dragging {
+      cursor: grabbing;
+    }
+
+    .viewer-toolbar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      background: rgba(18, 23, 54, 0.72);
+      color: #ffffff;
+      backdrop-filter: blur(10px);
+      z-index: 2;
+    }
+
+    .viewer-toolbar button {
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      font: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .viewer-toolbar button:hover,
+    .viewer-toolbar button:focus-visible {
+      background: rgba(0, 184, 92, 0.88);
+      outline: none;
+    }
+
+    .viewer-zoom {
+      min-width: 52px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
     }
 
     @media (max-width: 960px) {
@@ -406,6 +453,7 @@
         <ul class="task-list" id="taskList"></ul>
       </article>
     </section>
+
   </main>
 
   <dialog id="exampleModal">
@@ -425,9 +473,14 @@
   </dialog>
 
   <dialog id="imageViewerDialog" class="image-viewer-dialog">
+    <div class="viewer-toolbar" aria-label="Image controls">
+      <button id="zoomOutBtn" type="button" aria-label="Zoom out">−</button>
+      <div id="viewerZoom" class="viewer-zoom">100%</div>
+      <button id="zoomInBtn" type="button" aria-label="Zoom in">+</button>
+      <button id="zoomResetBtn" type="button" aria-label="Reset zoom">Reset</button>
+    </div>
     <div class="image-viewer" id="imageViewer">
-      <img id="viewerImage" alt="Full size preview" />
-      <div class="viewer-caption" id="viewerCaption"></div>
+      <img id="viewerImage" alt="Full size preview" draggable="false" />
     </div>
   </dialog>
 
@@ -870,58 +923,57 @@
       "Income vs. cashflow evidence": "RR"
 };
 
-    // Data URI images embedded in this HTML for fully offline sharing.
-    const EMBEDDED_IMAGES = {
-      "15-\u9ad8\u5ff5\u672a\u592e/\u4e0d\u52a8\u4ea7\u4fe1\u606f\u67e5\u8be2\u7ed3\u679c/005_\u6a21\u7cca.jpg": "assets/img_3995c510324b895a.jpg",
-      "10-Jerry Campbell/request_for_mortgage_assistance_form/005_\u6a21\u7cca.jpg": "assets/img_aff48e0a42a65eaa.jpg",
-      "34-\u848b\u9882\u98a2/\u8d44\u91d1\u6d41\u6c34\u5206\u6790\u8868/004_\u53cd\u5149.jpeg": "assets/img_91f9746fc6677162.jpg",
-      "10-Jerry Campbell/request_for_mortgage_assistance_form/001_\u6b63\u5e38.jpg": "assets/img_93ed5542d159d111.jpg",
-      "38-\u7f57\u98d2\u715c/\u6237\u53e3\u672c\uff08\u6237\u4e3b\u9875\uff09/004_\u53cd\u5149.JPG": "assets/img_4af87987e6ead006.jpg",
-      "10-Jerry Campbell/request_for_mortgage_assistance_form/003_\u9634\u5f71.jpg": "assets/img_6e53378082883357.jpg",
-      "28-\u8d75\u82e5\u51b0\u6e05/\u8eab\u4efd\u8bc1\uff08\u56fd\u5fbd\u9762\uff09/003_\u9634\u5f71.jpeg": "assets/img_321a93d0fcc10fe7.jpg",
-      "28-\u8d75\u82e5\u51b0\u6e05/\u4e0d\u52a8\u4ea7\u6743\u8bc1\u4e66/003_\u9634\u5f71.jpeg": "assets/img_61cfb161ea6118fa.jpg",
-      "28-\u8d75\u82e5\u51b0\u6e05/\u8eab\u4efd\u8bc1\uff08\u4eba\u50cf\u9762\uff09/003_\u9634\u5f71.jpeg": "assets/img_09b14b29f80a6b59.jpg",
-      "28-\u8d75\u82e5\u51b0\u6e05/\u4e0d\u52a8\u4ea7\u4fe1\u606f\u67e5\u8be2\u7ed3\u679c/003_\u9634\u5f71.jpeg": "assets/img_0d8d00ce9db3be9f.jpg",
-      "12-Jose Rojas/warranty_deed/005_\u6a21\u7cca.jpg": "assets/img_636be1994bbe208e.jpg",
-      "12-Jose Rojas/ssn/005_\u6a21\u7cca.jpg": "assets/img_e0e35bd88139c7a8.jpg",
-      "12-Jose Rojas/bank_statement/005_\u6a21\u7cca.jpg": "assets/img_bac64f4434638af1.jpg",
-      "12-Jose Rojas/billing/005_\u6a21\u7cca.jpg": "assets/img_6069d478121aacb3.jpg",
-      "18-\u5468\u835f/\u94f6\u884c\u5361/005_\u6a21\u7cca.jpg": "assets/img_40943ae971e2eeb2.jpg",
-      "13-Jia Chang/request_for_mortgage_assistance_form/001_\u6b63\u5e38.jpg": "assets/img_52a6b7a1ab01e14f.jpg",
-      "12-\u8c22\u884d/\u6d41\u6c34\u660e\u7ec6/001_\u6b63\u5e38.jpg": "assets/img_1cffed1226742f3b.jpg",
-      "10-Jerry Campbell/bank_statement/007_\u62cd\u7535\u8111\u5c4f.jpg": "assets/img_9582b8fc8e538733.jpg",
-      "26-\u6f58\u5a60/\u8eab\u4efd\u8bc1\uff08\u4eba\u50cf\u9762\uff09/008_\u80cc\u666f\u5e72\u6270.jpeg": "assets/img_395d74e39a4c27de.jpg",
-      "26-\u6f58\u5a60/\u4f01\u4e1a\u6cd5\u4eba\u8425\u4e1a\u6267\u7167/008_\u80cc\u666f\u5e72\u6270.jpeg": "assets/img_25d3d0908578256d.jpg",
-      "48-\u4f59\u5c9a\u747e/\u8eab\u4efd\u8bc1\uff08\u4eba\u50cf\u9762\uff09/008_\u80cc\u666f\u5e72\u6270.JPG": "assets/img_cabebe90533ce64a.jpg",
-      "21-\u7f57\u71a0/\u8d44\u91d1\u6d41\u6c34\u5206\u6790\u8868/008_\u80cc\u666f\u5e72\u6270.jpg": "assets/img_ab6b350d0b32fb2c.jpg",
-      "10-Jerry Campbell/ssn/003_\u9634\u5f71.jpg": "assets/img_52bfa88be90b80bd.jpg",
-      "0-Avery Bosh/billing/003_\u9634\u5f71.jpg": "assets/img_2abb1ed893441edf.jpg",
-      "2-Carlos Lopez/request_for_mortgage_assistance_form/003_\u9634\u5f71.jpg": "assets/img_236e8e371f9092d3.jpg",
-      "26-\u6f58\u5a60/\u7ec4\u54082/001_\u6b63\u5e38.jpeg": "assets/img_de3b9584dd5c5142.jpg",
-      "10-Jerry Campbell/\u7ec4\u54082/001_\u6b63\u5e38.jpg": "assets/img_440eedcadf3807a4.jpg",
-      "voucher_img/12-\u8c22\u884d.png": "assets/img_c548948ebb494bcd.png",
-      "26-\u6f58\u5a60/\u6536\u5165\u8bc1\u660e/009_\u6c34\u5370.jpg": "assets/img_a5fe5b20b89ee101.jpg",
-      "26-\u6f58\u5a60/\u8d37\u6b3e\u7ed3\u6e05\u8bc1\u660e/009_\u6c34\u5370.jpg": "assets/img_e7be18ebd3a54638.jpg",
-      "26-\u6f58\u5a60/\u4e2a\u4eba\u6240\u5f97\u7a0e\u5b8c\u7a0e\u8bc1\u660e/009_\u6c34\u5370.jpg": "assets/img_64a57446039697e0.jpg",
-      "26-\u6f58\u5a60/\u4e0d\u52a8\u4ea7\u4fe1\u606f\u67e5\u8be2\u7ed3\u679c/009_\u6c34\u5370.jpg": "assets/img_aca31a4e48896c14.jpg",
-      "0-Avery Bosh/billing/002_\u659c\u62cd.jpg": "assets/img_b35588aea1f9f188.jpg",
-      "0-Avery Bosh/property_owner_search_report/003_\u9634\u5f71.jpg": "assets/img_0fb19fa43b0b8d47.jpg",
-      "0-Avery Bosh/request_for_mortgage_assistance_form/009_\u6c34\u5370.jpg": "assets/img_5b4f20fbd269bbef.jpg",
-      "26-\u6f58\u5a60/\u8d44\u91d1\u6d41\u6c34\u5206\u6790\u8868/004_\u53cd\u5149.jpeg": "assets/img_e073950c02ea628c.jpg",
-      "10-Jerry Campbell/ssn/001_\u6b63\u5e38.jpg": "assets/img_7e4850388389b896.jpg",
-      "26-\u6f58\u5a60/\u6536\u5165\u8bc1\u660e/002_\u659c\u62cd.jpeg": "assets/img_1a4e2514a22b280d.jpg",
-      "10-Jerry Campbell/ssn/009_\u6c34\u5370.jpg": "assets/img_6f1662650dc8d764.jpg",
-      "26-\u6f58\u5a60/\u4e0d\u52a8\u4ea7\u4fe1\u606f\u67e5\u8be2\u7ed3\u679c/005_\u6a21\u7cca.jpeg": "assets/img_0c4f3f3c56d73d4f.jpg",
-      "10-Jerry Campbell/warranty_deed/001_\u6b63\u5e38.jpg": "assets/img_a32f37365c46e9a8.jpg",
-      "26-\u6f58\u5a60/\u4e2a\u4eba\u8d37\u6b3e\u8c03\u67e5\u62a5\u544a/010_\u62cd\u6444\u4e0d\u5b8c\u6574.jpg": "assets/img_1069ee29876f6bfb.jpg",
-      "26-\u6f58\u5a60/\u6536\u5165\u8bc1\u660e/010_\u62cd\u6444\u4e0d\u5b8c\u6574.jpg": "assets/img_80440057f21de629.jpg",
-      "10-Jerry Campbell/bank_statement/006_\u5360\u6bd4\u5c0f.jpg": "assets/img_ebb024aec5065a69.jpg",
-      "26-\u6f58\u5a60/\u6536\u5165\u8bc1\u660e/003_\u9634\u5f71.jpeg": "assets/img_8553a9b79648af8b.jpg",
-      "26-\u6f58\u5a60/\u4e2a\u4eba\u6240\u5f97\u7a0e\u5b8c\u7a0e\u8bc1\u660e/003_\u9634\u5f71.jpeg": "assets/img_3b96cae287d4913c.jpg",
-      "26-\u6f58\u5a60/\u8d37\u6b3e\u7533\u8bf7\u8868/006_\u5360\u6bd4\u5c0f.jpeg": "assets/img_e7a7aa7c790eddf5.jpg",
-      "26-\u6f58\u5a60/\u6536\u5165\u8bc1\u660e/006_\u5360\u6bd4\u5c0f.jpeg": "assets/img_d5eda0f9032bcb41.jpg",
-      "13-\u5f6d\u701a\u68e3/\u6536\u5165\u8bc1\u660e/006_\u5360\u6bd4\u5c0f.jpg": "assets/img_9d2edc2809b9d0d3.jpg",
-      "13-\u5f6d\u701a\u68e3/\u6d41\u6c34\u660e\u7ec6/006_\u5360\u6bd4\u5c0f.jpg": "assets/img_dd5b9c09950e14d5.jpg"
+    const ASSET_IMAGES = {
+      "15-高念未央/不动产信息查询结果/005_模糊.jpg": "assets/img_b9c5572d4ea0be8e.jpg",
+      "10-Jerry Campbell/request_for_mortgage_assistance_form/005_模糊.jpg": "assets/img_0b9d1935bcd108f7.jpg",
+      "34-蒋颂颢/资金流水分析表/004_反光.jpeg": "assets/img_279da45cf8a4c4f1.jpeg",
+      "10-Jerry Campbell/request_for_mortgage_assistance_form/001_正常.jpg": "assets/img_7e93b862f9db9d6c.jpg",
+      "38-罗飒煜/户口本（户主页）/004_反光.JPG": "assets/img_c8d66bec7bf7e16f.jpg",
+      "10-Jerry Campbell/request_for_mortgage_assistance_form/003_阴影.jpg": "assets/img_d6fc919f2ea5674e.jpg",
+      "28-赵若冰清/身份证（国徽面）/003_阴影.jpeg": "assets/img_db2478e2ea68e34b.jpeg",
+      "28-赵若冰清/不动产权证书/003_阴影.jpeg": "assets/img_80440446ee4cfe3d.jpeg",
+      "28-赵若冰清/身份证（人像面）/003_阴影.jpeg": "assets/img_f5103ee596db9082.jpeg",
+      "28-赵若冰清/不动产信息查询结果/003_阴影.jpeg": "assets/img_f4863b30784040f8.jpeg",
+      "12-Jose Rojas/warranty_deed/005_模糊.jpg": "assets/img_4b1f27ba9ff86030.jpg",
+      "12-Jose Rojas/ssn/005_模糊.jpg": "assets/img_750d7b116d8d799a.jpg",
+      "12-Jose Rojas/bank_statement/005_模糊.jpg": "assets/img_86d0a7690ed5e432.jpg",
+      "12-Jose Rojas/billing/005_模糊.jpg": "assets/img_d088e6f65c7b3070.jpg",
+      "18-周荟/银行卡/005_模糊.jpg": "assets/img_d1bf5ac5eb11ff3b.jpg",
+      "13-Jia Chang/request_for_mortgage_assistance_form/001_正常.jpg": "assets/img_87df0d9e7314778a.jpg",
+      "12-谢衍/流水明细/001_正常.jpg": "assets/img_e330d9217f78228e.jpg",
+      "10-Jerry Campbell/bank_statement/007_拍电脑屏.jpg": "assets/img_76dd740ed67609a8.jpg",
+      "26-潘婠/身份证（人像面）/008_背景干扰.jpeg": "assets/img_d7e559419ee2b68a.jpeg",
+      "26-潘婠/企业法人营业执照/008_背景干扰.jpeg": "assets/img_a8edb616cc9e5220.jpeg",
+      "48-余岚瑾/身份证（人像面）/008_背景干扰.JPG": "assets/img_f1aba4959d9fc7b3.jpg",
+      "21-罗熠/资金流水分析表/008_背景干扰.jpg": "assets/img_de13af90b4694b2b.jpg",
+      "10-Jerry Campbell/ssn/003_阴影.jpg": "assets/img_5a54a628fb039aa8.jpg",
+      "0-Avery Bosh/billing/003_阴影.jpg": "assets/img_982dcc9ff9d5a644.jpg",
+      "2-Carlos Lopez/request_for_mortgage_assistance_form/003_阴影.jpg": "assets/img_563ef310829eec04.jpg",
+      "26-潘婠/组合2/001_正常.jpeg": "assets/img_8edb879d12d7a2db.jpeg",
+      "10-Jerry Campbell/组合2/001_正常.jpg": "assets/img_4a4af751f2f34230.jpg",
+      "voucher_img/12-谢衍.png": "assets/img_9fa0cc34e52be67d.png",
+      "26-潘婠/收入证明/009_水印.jpg": "assets/img_72d4cae96440f7b1.jpg",
+      "26-潘婠/贷款结清证明/009_水印.jpg": "assets/img_32e49e30142704b0.jpg",
+      "26-潘婠/个人所得税完税证明/009_水印.jpg": "assets/img_bac3efc2cafad7cd.jpg",
+      "26-潘婠/不动产信息查询结果/009_水印.jpg": "assets/img_a61d65e785149f53.jpg",
+      "0-Avery Bosh/billing/002_斜拍.jpg": "assets/img_bf333a604bfeeefa.jpg",
+      "0-Avery Bosh/property_owner_search_report/003_阴影.jpg": "assets/img_cc3c4b61ee3e8e42.jpg",
+      "0-Avery Bosh/request_for_mortgage_assistance_form/009_水印.jpg": "assets/img_d653327e4b6b5df2.jpg",
+      "26-潘婠/资金流水分析表/004_反光.jpeg": "assets/img_cd74af501ddd05fc.jpeg",
+      "10-Jerry Campbell/ssn/001_正常.jpg": "assets/img_da0b3ff2ff35d834.jpg",
+      "26-潘婠/收入证明/002_斜拍.jpeg": "assets/img_62f5c78ca8c1445f.jpeg",
+      "10-Jerry Campbell/ssn/009_水印.jpg": "assets/img_de89c0021dc9a31a.jpg",
+      "26-潘婠/不动产信息查询结果/005_模糊.jpeg": "assets/img_8133bc3034f5a11d.jpeg",
+      "10-Jerry Campbell/warranty_deed/001_正常.jpg": "assets/img_c072dc6911173bf8.jpg",
+      "26-潘婠/个人贷款调查报告/010_拍摄不完整.jpg": "assets/img_d4618767f15fa192.jpg",
+      "26-潘婠/收入证明/010_拍摄不完整.jpg": "assets/img_da7a62b4ef5f8d0d.jpg",
+      "10-Jerry Campbell/bank_statement/006_占比小.jpg": "assets/img_333a6f7e7bb9814e.jpg",
+      "26-潘婠/收入证明/003_阴影.jpeg": "assets/img_79b90c1de88cdb0e.jpeg",
+      "26-潘婠/个人所得税完税证明/003_阴影.jpeg": "assets/img_1c97bc6e671a2526.jpeg",
+      "26-潘婠/贷款申请表/006_占比小.jpeg": "assets/img_75ba19abf7f7f279.jpeg",
+      "26-潘婠/收入证明/006_占比小.jpeg": "assets/img_c107886e212691e7.jpeg",
+      "13-彭瀚棣/收入证明/006_占比小.jpg": "assets/img_dae0018f361edd55.jpg",
+      "13-彭瀚棣/流水明细/006_占比小.jpg": "assets/img_d9e720cc776691ea.jpg"
 };
 
     const workflowList = document.getElementById("workflowList");
@@ -1014,7 +1066,22 @@
     const imageViewerDialog = document.getElementById("imageViewerDialog");
     const imageViewer = document.getElementById("imageViewer");
     const viewerImage = document.getElementById("viewerImage");
-    const viewerCaption = document.getElementById("viewerCaption");
+    const zoomOutBtn = document.getElementById("zoomOutBtn");
+    const zoomInBtn = document.getElementById("zoomInBtn");
+    const zoomResetBtn = document.getElementById("zoomResetBtn");
+    const viewerZoom = document.getElementById("viewerZoom");
+    const viewerState = {
+      scale: 1,
+      minScale: 1,
+      maxScale: 5,
+      x: 0,
+      y: 0,
+      dragging: false,
+      moved: false,
+      startX: 0,
+      startY: 0,
+      pointerId: null
+    };
 
     document.getElementById("closeModal").addEventListener("click", () => modal.close());
     modal.addEventListener("click", (event) => {
@@ -1024,12 +1091,13 @@
     });
 
     function closeFullSizeImage() {
+      resetViewerTransform();
       if (imageViewerDialog.open) imageViewerDialog.close();
       viewerImage.removeAttribute("src");
     }
 
     imageViewerDialog.addEventListener("click", (event) => {
-      if (event.target === imageViewerDialog || event.target === imageViewer || event.target === viewerImage) {
+      if (event.target === imageViewerDialog || event.target === imageViewer) {
         closeFullSizeImage();
       }
     });
@@ -1050,14 +1118,117 @@
     }
 
     function resolveImageSrc(path) {
-      return EMBEDDED_IMAGES[path] || makePlaceholderDataUri();
+      return ASSET_IMAGES[path] || makePlaceholderDataUri();
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function updateViewerTransform() {
+      viewerImage.style.transform = `translate(${viewerState.x}px, ${viewerState.y}px) scale(${viewerState.scale})`;
+      viewerZoom.textContent = `${Math.round(viewerState.scale * 100)}%`;
+    }
+
+    function resetViewerTransform() {
+      viewerState.scale = 1;
+      viewerState.x = 0;
+      viewerState.y = 0;
+      viewerState.dragging = false;
+      viewerState.moved = false;
+      viewerState.pointerId = null;
+      viewerImage.classList.remove("dragging");
+      updateViewerTransform();
+    }
+
+    function zoomImage(nextScale, originX = window.innerWidth / 2, originY = window.innerHeight / 2) {
+      const boundedScale = clamp(nextScale, viewerState.minScale, viewerState.maxScale);
+      const rect = viewerImage.getBoundingClientRect();
+      const offsetX = originX - (rect.left + rect.width / 2);
+      const offsetY = originY - (rect.top + rect.height / 2);
+      const scaleRatio = boundedScale / viewerState.scale;
+
+      viewerState.x -= offsetX * (scaleRatio - 1);
+      viewerState.y -= offsetY * (scaleRatio - 1);
+      viewerState.scale = boundedScale;
+
+      if (viewerState.scale === 1) {
+        viewerState.x = 0;
+        viewerState.y = 0;
+      }
+
+      updateViewerTransform();
     }
 
     function showFullSizeImage(src) {
       viewerImage.src = src;
-      viewerCaption.textContent = "";
+      resetViewerTransform();
       imageViewerDialog.showModal();
     }
+
+    viewerImage.addEventListener("pointerdown", (event) => {
+      if (viewerState.scale <= 1) return;
+      event.preventDefault();
+      viewerState.dragging = true;
+      viewerState.moved = false;
+      viewerState.pointerId = event.pointerId;
+      viewerState.startX = event.clientX - viewerState.x;
+      viewerState.startY = event.clientY - viewerState.y;
+      viewerImage.classList.add("dragging");
+    });
+
+    window.addEventListener("pointermove", (event) => {
+      if (!viewerState.dragging || event.pointerId !== viewerState.pointerId) return;
+      event.preventDefault();
+      const nextX = event.clientX - viewerState.startX;
+      const nextY = event.clientY - viewerState.startY;
+      if (Math.abs(nextX - viewerState.x) > 2 || Math.abs(nextY - viewerState.y) > 2) {
+        viewerState.moved = true;
+      }
+      viewerState.x = nextX;
+      viewerState.y = nextY;
+      updateViewerTransform();
+    });
+
+    function stopDragging(event) {
+      if (event && viewerState.pointerId !== null && event.pointerId !== viewerState.pointerId) return;
+      viewerState.dragging = false;
+      viewerState.pointerId = null;
+      viewerImage.classList.remove("dragging");
+    }
+
+    window.addEventListener("pointerup", stopDragging);
+    window.addEventListener("pointercancel", stopDragging);
+    viewerImage.addEventListener("dragstart", (event) => event.preventDefault());
+    imageViewer.addEventListener("dragstart", (event) => event.preventDefault());
+
+    viewerImage.addEventListener("click", (event) => {
+      if (viewerState.moved) {
+        event.preventDefault();
+        event.stopPropagation();
+        viewerState.moved = false;
+      }
+    });
+
+    viewerImage.addEventListener("dblclick", (event) => {
+      event.preventDefault();
+      if (viewerState.scale > 1) {
+        resetViewerTransform();
+      } else {
+        zoomImage(2, event.clientX, event.clientY);
+      }
+    });
+
+    imageViewer.addEventListener("wheel", (event) => {
+      if (!imageViewerDialog.open) return;
+      event.preventDefault();
+      const delta = event.deltaY < 0 ? 0.2 : -0.2;
+      zoomImage(viewerState.scale + delta, event.clientX, event.clientY);
+    }, { passive: false });
+
+    zoomInBtn.addEventListener("click", () => zoomImage(viewerState.scale + 0.25));
+    zoomOutBtn.addEventListener("click", () => zoomImage(viewerState.scale - 0.25));
+    zoomResetBtn.addEventListener("click", resetViewerTransform);
 
     function createLangCard(languageLabel, example) {
       const card = document.createElement("section");
