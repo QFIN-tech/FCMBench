@@ -150,46 +150,8 @@ def evaluate_tasks(raw_scores):
     return task_mean_sorted #['task_f1'].mean()
 
 
-def evaluate_robustness(raw_scores):
-    df = pd.DataFrame(raw_scores)
-    subtask_mean = (
-        df.loc[df["task"].ne("IQE")]
-        .groupby(["robustness", "task", "subtask"], as_index=False)
-        .agg(subtask_f1_mean=("f1", "mean"))
-    )
-    normal_sub_mean = (
-        subtask_mean[subtask_mean["robustness"].eq("Normal Captures")]
-    )
-    normal_task_mean = (
-        normal_sub_mean.groupby("task", as_index=False)
-                .agg(task_f1=("subtask_f1_mean", "mean"))
-    )
-    normal_overall_mean = normal_task_mean["task_f1"].mean()
-    task_mean = (
-        subtask_mean.groupby(["robustness", "task"], as_index=False)
-                    .agg(task_f1=("subtask_f1_mean", "mean"))
-    )
-    robustness_scores = (
-        task_mean.groupby("robustness", as_index=False)
-                 .agg(robustness_macro_f1=("task_f1", "mean"))
-                 .sort_values("robustness_macro_f1", ascending=False)
-                 .reset_index(drop=True)
-    )
-    robustness_scores = robustness_scores.copy()
-    robustness_scores["normal_denom"] = normal_overall_mean
-
-    robustness_scores["relative_to_normal"] = (
-        robustness_scores["robustness_macro_f1"] / robustness_scores["normal_denom"]
-    )
-    robustness_scores = robustness_scores.drop(columns=["normal_denom", "robustness_macro_f1"])
-    robustness_scores = robustness_scores.sort_values('relative_to_normal', ascending=False)
-    print("Performance by Robustness:\n", robustness_scores)
-    return robustness_scores
-
-
 if __name__ == "__main__":
     p_file = sys.argv[1]
     g_file = sys.argv[2]
     raw_scores = evaluate_samples(p_file, g_file)
     evaluate_tasks(raw_scores)
-    evaluate_robustness(raw_scores)
