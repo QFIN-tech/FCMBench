@@ -28,7 +28,7 @@ Image-based financial document understanding:
 
 #### Paper & Project Links
 - [**Paper (arXiv)**](https://arxiv.org/abs/2601.00150)
-- [**Paper (PDF)**](https://arxiv.org/pdf/2601.00150)
+- [**Paper (PDF)**](https://github.com/QFIN-tech/FCMBench/tree/main/TechnicalReport)
 - [**Project Page**](https://github.com/QFIN-tech/FCMBench/tree/main/vision_language)
 - [**Leaderboard**](https://qfin-tech.github.io/FCMBench)
 - [**Sample Data**](https://qfin-tech.github.io/FCMBench/Examples.html)
