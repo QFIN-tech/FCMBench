@@ -6,9 +6,10 @@
 [English Version](./README.md)
 
 ## 🔥 新闻
-- 【**2026. 01. 01**】✨ 我们很高兴发布 [**FCMBench-V1.0**](https://github.com/QFIN-tech/FCMBench/tree/main/vision_language)，该版本覆盖 18 类核心证件类型，包含 4,043 张符合隐私合规要求的图像与 8,446 条问答样本。其任务体系涵盖 3 类感知（Perception）任务与 4 类推理（Reasoning）任务，并与 10 类健壮性推理（robustness inferences）交叉引用。所有任务与推理过程均来源于真实世界的关键业务场景。
+- 【**2026. 03. 16**】✨ 我们发布了**FCMBench-V1.1**，该版本加入了英文证件图像和相关问答对，覆盖的证件类型增加至 26 个，图像增加至 5,198 张，问答样本增加至 13,806 条。
+- 【**2026. 01. 01**】我们很高兴发布 [**FCMBench-V1.0**](https://github.com/QFIN-tech/FCMBench/tree/main/vision_language)，该版本覆盖 18 类核心证件类型，包含 4,043 张符合隐私合规要求的图像与 8,446 条问答样本。其任务体系涵盖 3 类感知（Perception）任务与 4 类推理（Reasoning）任务，并与 10 类健壮性推理（robustness inferences）交叉引用。所有任务与推理过程均来源于真实世界的关键业务场景。
 
-> **状态：** 公开发布（v1.0）。  
+> **状态：** 公开发布（v1.1）。  
 > **维护者：** [奇富科技 / Qfin Holdings](https://github.com/QFIN-tech)  
 > **联系方式：** [yangyehui-jk@qifu.com]
 
@@ -16,7 +17,7 @@
 
 ## 赛道概览
 
-### 1) 视觉-语言赛道（✅ 已开放，**FCMBench-V1.0**）
+### 1) 视觉-语言赛道（✅ 已开放）
 
 基于图像的金融文档理解：
 
@@ -34,7 +35,7 @@
 - [**数据集（Hugging Face）**](https://huggingface.co/datasets/QFIN/FCMBench-V1.0)
 
 #### 参考模型 Demo
-我们也提供 Qfin-VL-Instruct 模型的交互式演示（demo）访问，该模型在 FCMBench-V1.0 上表现强劲。  
+我们也提供 Qfin-VL-Instruct 模型的交互式演示（demo）访问，该模型在 FCMBench 上表现强劲。  
 如果你希望试用 Gradio demo，请将以下信息发送至 [yangyehui-jk@qifu.com]：
 - 姓名
 - 所属单位 / 组织

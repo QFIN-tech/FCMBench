@@ -6,9 +6,10 @@
 [简体中文](./README_cn.md)
 
 ## 🔥 News 
-- 【**2026. 01. 01**】✨ We are proud to launch [**FCMBench-V1.0**](https://github.com/QFIN-tech/FCMBench/tree/main/vision_language), which covers 18 core certificate types, including 4,043 privacy-compliant images and 8,446 QA samples. It involves 3 types of Perception tasks and 4 types of Reasoning tasks, which are cross-referenced with 10 categories of robustness inferences. All the tasks and inferences are derived from real-world critical scenarios.
+- 【**2026. 03. 16**】✨ We released **FCMBench-V1.1**. This version adds English document images and corresponding QA pairs, expands the covered document types to 26, and increases the dataset to 5,198 images and 13,806 QA samples.
+- 【**2026. 01. 01**】We are proud to launch [**FCMBench-V1.0**](https://github.com/QFIN-tech/FCMBench/tree/main/vision_language), which covers 18 core certificate types, including 4,043 privacy-compliant images and 8,446 QA samples. It involves 3 types of Perception tasks and 4 types of Reasoning tasks, which are cross-referenced with 10 categories of robustness inferences. All the tasks and inferences are derived from real-world critical scenarios.
 
-> **Status:** Public release (v1.0).  
+> **Status:** Public release (v1.1).  
 > **Maintainers:** [奇富科技 / Qfin Holdings](https://github.com/QFIN-tech)  
 > **Contact:** [yangyehuisw@126.com]
 
@@ -16,7 +17,7 @@
 
 ## Tracks Overview
 
-### 1) Vision-Language Track (✅ Available, **FCMBench-V1.0**)
+### 1) Vision-Language Track (✅ Available)
 
 Image-based financial document understanding: 
 
@@ -31,11 +32,11 @@ Image-based financial document understanding:
 - [**Project Page**](https://github.com/QFIN-tech/FCMBench/tree/main/vision_language)
 - [**Leaderboard**](https://qfin-tech.github.io/FCMBench)
 - [**Sample Data**](https://qfin-tech.github.io/FCMBench/Examples.html)
-- [**Dataset (ModelScope)**](https://modelscope.cn/datasets/QFIN/FCMBench-V1.0)
-- [**Dataset (Hugging Face)**](https://huggingface.co/datasets/QFIN/FCMBench-V1.0)
+- [**Dataset (ModelScope)**](https://modelscope.cn/datasets/QFIN/FCMBench-Data)
+- [**Dataset (Hugging Face)**](https://huggingface.co/datasets/QFIN/FCMBench-Data)
 
 #### Reference Model Demo
-We also provide access to an interactive demo of our Qfin-VL-Instruct model, which achieves strong performance on FCMBench-V1.0.
+We also provide access to an interactive demo of our Qfin-VL-Instruct model, which achieves strong performance on FCMBench.
 If you are interested in trying the Gradio demo, please contact [yangyehui-jk@qifu.com] with the following information:
 - Name
 - Affiliation / Organization
