@@ -1,6 +1,6 @@
 # FCMBench — Vision Language Track Evaluation
 
-![](../assets/tasks_robustness_overview.jpg)
+![](../assets/task_robustness_overview.jpg)
 
 This repository provides evaluation scripts for **FCMBench** (Vision-Language track).  
 The workflow is:
@@ -22,10 +22,10 @@ The workflow is:
 
 ### 1) Download image data and uncompress
 
-The image data are hosted on both [**ModelScope**](https://modelscope.cn/datasets/QFIN/FCMBench-V1.0) and [**Hugging Face**](https://huggingface.co/datasets/QFIN/FCMBench-V1.0).
+The image data are hosted on both [**ModelScope**](https://modelscope.cn/datasets/QFIN/FCMBench-Data) and [**Hugging Face**](https://huggingface.co/datasets/QFIN/FCMBench-Data).
 
 ```bash
-unzip V1.0_TESTSET.zip # uncompress to ./data/oceanus-share/V1.0_IMAGES_TEST/
+unzip FCMBench_v1.1_Images.zip
 ```
 
 ### 2) Run inference and save results (JSONL)
@@ -40,9 +40,9 @@ Use any inference framework or API to generate predictions, and save them as a *
 ### 3) Evaluate predictions
 
 FCMBench provides two test annotation files:
--  ```FCMBench_v1.0_testset_small.jsonl```: a subset where ground-truth annotations are provided.
+-  ```FCMBench_v1.1_testset_small.jsonl```: a subset where ground-truth annotations are provided.
 Use this file for self-testing, debugging, and diagnosis.
-- ```FCMBench_v1.0_testset_full.jsonl```: the full test set that only provides prompts (no ground-truth).
+- ```FCMBench_v1.1_testset_full.jsonl```: the full test set that only provides prompts (no ground-truth).
 Use this file to generate results for leaderboard submission.
 
 Note: The subset (*_small.jsonl) is generally conservative for ranking compared with the full set, meaning relative ordering among models is often stable. However, absolute metric values may differ between the subset and the full test set.
