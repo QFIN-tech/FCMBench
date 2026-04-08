@@ -1,6 +1,6 @@
 # FCMBench — Vision Language Track Evaluation
 
-![](../assets/tasks_robustness_overview.png)
+![](../assets/tasks_robustness_overview.jpg)
 
 This repository provides evaluation scripts for **FCMBench** (Vision-Language track).  
 The workflow is:
