@@ -68,12 +68,12 @@ python3 evaluation.py prediction_results.jsonl FCMBench_v1.0_testset_small.jsonl
 
 Where: 
 - ```prediction_results.jsonl``` is your model output file; use ```prediction_results_example.jsonl``` if you haven't generated your own results
-- ```FCMBench_v1.0_testset_small.jsonl``` is the official self-test subset annotation file (ground-truth provided). 
+- ```FCMBench_v1.1_testset_small.jsonl``` is the official self-test subset annotation file (ground-truth provided). 
 
 ## Leaderboard submission
 
 To join the FCMBench leaderboard:
-1.	Run inference on ```FCMBench_v1.0_testset_full.jsonl```
+1.	Run inference on ```FCMBench_v1.1_testset_full.jsonl```
 2.	Save your predictions to a JSONL file (same format as the example)
 3.	Email the JSONL file to [yangyehuisw@126.com] with the following information:
 	•	Model name / version
