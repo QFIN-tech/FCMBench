@@ -4,18 +4,16 @@
 **FCMBench** is a multimodal benchmark for credit-risk–oriented workflows. It aims to provide a standard playground to promote collaborative development between academia and industry and provides standardized datasets, prompts, and evaluation scripts across multiple tracks (image, video, speech, agents, etc.)
 
 <p align="center">
-🤗 <a href="https://huggingface.co/datasets/QFIN/FCMBench-Data"><b>Hugging Face</b></a>&nbsp;&nbsp; | &nbsp;&nbsp;🤖 <a href="https://modelscope.cn/datasets/QFIN/FCMBench-Data"><b>ModelScope</b></a>&nbsp;&nbsp; | &nbsp;&nbsp;📑 <a href="https://arxiv.org/abs/2601.00150"><b>FCMBench Paper</b></a>&nbsp;&nbsp; | &nbsp;&nbsp;📑 <a href="https://arxiv.org/abs/2604.25186"><b>FCMBench-Video Paper</b></a>&nbsp;&nbsp; | &nbsp;&nbsp;🏆 <a href="https://qfin-tech.github.io/FCMBench"><b>Leaderboard</b></a>
+🤗 <a href="https://huggingface.co/datasets/QFIN/FCMBench-Data"><b>Hugging Face</b></a>&nbsp;&nbsp; | &nbsp;&nbsp;🤖 <a href="https://modelscope.cn/datasets/QFIN/FCMBench-Data"><b>ModelScope</b></a>&nbsp;&nbsp; | &nbsp;&nbsp;📑 <a href="https://arxiv.org/abs/2601.00150"><b>FCMBench Paper</b></a>&nbsp;&nbsp; | &nbsp;&nbsp;📑 <a href="https://arxiv.org/abs/2604.25186"><b>FCMBench-Video Paper</b></a>&nbsp;&nbsp; | &nbsp;&nbsp;🏆 <a href="https://qfin-tech.github.io/FCMBench"><b>Leaderboard</b></a>&nbsp;&nbsp; | &nbsp;&nbsp;🌐 <a href="./README_cn.md"><b>简体中文</b></a>
 </p>
-
-[简体中文](./README_cn.md)
 
 ## 🔥 News
 - 【**2026. 04. 29**】🎬 We released **FCMBench-Video**, a benchmark for document-video intelligence. Built from 495 captured atomic videos and composed into 1,200 long-form videos with 11,322 QA instances across 28 document types (bilingual CN/EN). Paper: [arXiv 2604.25186](https://arxiv.org/abs/2604.25186).
 - 【**2026. 03. 16**】✨ We released **FCMBench-V1.1**. This version adds English document images and corresponding QA pairs, expands the covered document types to 26, and increases the dataset to 5,198 images and 13,806 QA samples.
 - 【**2026. 01. 01**】We are proud to launch **FCMBench-V1.0**, which covers 18 core certificate types, including 4,043 privacy-compliant images and 8,446 QA samples. It involves 3 types of Perception tasks and 4 types of Reasoning tasks, which are cross-referenced with 10 categories of robustness inferences. All the tasks and inferences are derived from real-world critical scenarios.
 
-> **Status:** Public release (v1.1).
-> **Maintainers:** [奇富科技 / Qfin Holdings](https://github.com/QFIN-tech)
+> **Status:** Public release (v1.1).<br>
+> **Maintainers:** [奇富科技 / Qfin Holdings](https://github.com/QFIN-tech)<br>
 > **Contact:** [yangyehuisw@126.com]
 
 ---
@@ -65,6 +63,8 @@ Document-video intelligence benchmark covering document perception, temporal gro
 ### 4) Multi-step / Agentic Track (🕒 Coming Soon)
 
 ## Citation
+
+**FCMBench (Vision-Language Track):**
 ```
 @misc{yang2026fcmbenchcomprehensivefinancialcredit,
       title={FCMBench: A Comprehensive Financial Credit Multimodal Benchmark for Real-world Applications},
@@ -74,6 +74,19 @@ Document-video intelligence benchmark covering document perception, temporal gro
       archivePrefix={arXiv},
       primaryClass={cs.CV},
       url={https://arxiv.org/abs/2601.00150},
+}
+```
+
+**FCMBench-Video (Video Understanding Track):**
+```
+@misc{cui2026fcmbenchvideobenchmarkingdocumentvideo,
+      title={FCMBench-Video: Benchmarking Document Video Intelligence}, 
+      author={Runze Cui and Fangxin Shang and Yehui Yang and Qing Yang and Tao Chen},
+      year={2026},
+      eprint={2604.25186},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2604.25186}, 
 }
 ```
 
