@@ -1,5 +1,7 @@
 # FCMBench — Vision Language Track Evaluation
 
+[🌐 简体中文](README_cn.md)
+
 ![](../assets/task_robustness_overview.jpg)
 
 This repository provides evaluation scripts for **FCMBench** (Vision-Language track).  

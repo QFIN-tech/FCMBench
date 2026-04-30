@@ -23,7 +23,7 @@
 | 赛道入口 | 输入 | 输出 | 评测脚本 | 排行榜 | 论文 | 样例数据 |
 |---|---|---|---|---|---|---|
 | [Vision-Language Track](vision_language) | 文档图像 + 文本指令（JSONL，每行一个样本） | 文本响应（JSONL，每行一个样本） | [evaluation.py](vision_language/evaluation.py) | [排行榜](https://qfin-tech.github.io/FCMBench) | [arXiv 2601.00150](https://arxiv.org/abs/2601.00150) | [示例页](https://qfin-tech.github.io/FCMBench/Examples.html) |
-| [Video Understanding Track](video_understanding) | 文档视频 + 文本指令（JSONL） | 文本响应（JSONL） | *(待定)* | *(待定)* | [arXiv 2604.25186](https://arxiv.org/abs/2604.25186) | *(待定)* |
+| [Video Understanding Track](video_understanding) | 文档视频 + 文本指令（JSONL） | 文本响应（JSONL） | [benchmark_eval.py](video_understanding/benchmark_eval.py) | 通过[提交](video_understanding/README_cn.md#排行榜)参与 | [arXiv 2604.25186](https://arxiv.org/abs/2604.25186) | 详见 [README](video_understanding/README_cn.md) |
 
 ---
 
@@ -51,7 +51,7 @@
 面向文档视频智能的基准测试，覆盖真实手持拍摄条件下的文档感知、时序定位与证据推理能力。基于 495 段实拍原子视频构建，组合为 1,200 段长视频（20s/40s/60s 时长区间），配套 11,322 条专家标注的问答实例，覆盖 28 种文档类型（中英双语）。详见[论文](https://arxiv.org/abs/2604.25186)了解完整基准设计和 9 款 Video-MLLM 的评测结果。
 
 #### 样例数据
-*(待定)*
+请参阅[视频理解赛道 README](video_understanding/README_cn.md) 了解完整的数据组成、指令文件说明和快速开始指南。提供一个含真值标注的分层 10% 子集（`FCMBench-Video_v1.0_small.jsonl`）用于自测。
 
 #### 参考模型 Demo
 *(待定)*

@@ -23,7 +23,7 @@
 | Entry | Inputs | Outputs | Evaluation Script | Leaderboard | Paper | Sample Data |
 |---|---|---|---|---|---|---|
 | [Vision-Language Track](vision_language) | document images + text prompts (JSONL, one sample per line) | text responses (JSONL, one sample per line) | [evaluation.py](vision_language/evaluation.py) | [Leaderboard](https://qfin-tech.github.io/FCMBench) | [arXiv 2601.00150](https://arxiv.org/abs/2601.00150) | [Examples](https://qfin-tech.github.io/FCMBench/Examples.html) |
-| [Video Understanding Track](video_understanding) | document videos + text prompts (JSONL) | text responses (JSONL) | *(TBD)* | *(TBD)* | [arXiv 2604.25186](https://arxiv.org/abs/2604.25186) | *(TBD)* |
+| [Video Understanding Track](video_understanding) | document videos + text prompts (JSONL) | text responses (JSONL) | [benchmark_eval.py](video_understanding/benchmark_eval.py) | via [submission](video_understanding/README.md#leaderboard) | [arXiv 2604.25186](https://arxiv.org/abs/2604.25186) | see [README](video_understanding/README.md) |
 
 ---
 
@@ -51,7 +51,7 @@ Access will be granted on a case-by-case basis.
 Document-video intelligence benchmark covering document perception, temporal grounding, and evidence-grounded reasoning under realistic handheld capture conditions. Built from 495 captured atomic videos composed into 1,200 long-form videos (20s/40s/60s duration tiers) with 11,322 expert-annotated QA instances across 28 document types in bilingual Chinese/English settings. See the [paper](https://arxiv.org/abs/2604.25186) for full benchmark details and evaluation results on nine Video-MLLMs.
 
 #### Sample Data
-*(TBD)*
+Please refer to the [Video Understanding track README](video_understanding/README.md) for the full data composition, instruction file descriptions, and quickstart guide. A stratified 10% subset with ground-truth (`FCMBench-Video_v1.0_small.jsonl`) is available for self-evaluation.
 
 #### Reference Model Demo
 *(TBD)*
