@@ -37,7 +37,7 @@ Image-based financial document understanding:
 
 #### Reference Model Demo
 We also provide access to an interactive demo of our Qfin-VL-Instruct model, which achieves strong performance on FCMBench.
-If you are interested in trying the Gradio demo, please contact [yangyehui-jk@qifu.com] with the following information:
+If you are interested in trying the Gradio demo, please contact [yangyehuisw@126.com] with the following information:
 - Name
 - Affiliation / Organization
 - Intended use (e.g., research exploration, benchmarking reference)
