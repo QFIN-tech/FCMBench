@@ -53,9 +53,9 @@ Access will be granted on a case-by-case basis.
 
 ## Citation
 ```
-@misc{yang2026fcmbenchcomprehensivefinancialcredit,
-      title={FCMBench: A Comprehensive Financial Credit Multimodal Benchmark for Real-world Applications}, 
-      author={Yehui Yang and Dalu Yang and Wenshuo Zhou and Fangxin Shang and Yifan Liu and Jie Ren and Haojun Fei and Qing Yang and Yanwu Xu and Tao Chen},
+@misc{yang2026fcmbenchlargescalefinancialcredit,
+      title={FCMBench: The First Large-scale Financial Credit Multimodal Benchmark for Real-world Applications}, 
+      author={Yehui Yang and Dalu Yang and Fangxin Shang and Wenshuo Zhou and Jie Ren and Yifan Liu and Haojun Fei and Qing Yang and Yanwu Xu and Tao Chen},
       year={2026},
       eprint={2601.00150},
       archivePrefix={arXiv},
