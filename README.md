@@ -1,69 +1,124 @@
+# FCMBench
+
+[![arXiv](https://img.shields.io/badge/arXiv-2601.00150-b31b1b.svg)](https://arxiv.org/abs/2601.00150)
+[![Dataset: Hugging Face](https://img.shields.io/badge/dataset-Hugging%20Face-yellow)](https://huggingface.co/datasets/QFIN/FCMBench-Data)
+[![Dataset: ModelScope](https://img.shields.io/badge/dataset-ModelScope-blue)](https://modelscope.cn/datasets/QFIN/FCMBench-Data)
+[![License](https://img.shields.io/github/license/QFIN-tech/FCMBench)](LICENSE)
+
 ![](assets/FCMBench_logo.jpg)
 
-
-**FCMBench** is a multimodal benchmark for credit-risk–oriented workflows. It aims to provide a standard playground to promote collaborative development between academia and industry and provides standardized datasets, prompts, and evaluation scripts across multiple tracks (image, video, speech, agents, etc.)
+FCMBench is a multimodal benchmark for credit-risk and financial document workflows. It provides standardized datasets, prompts, evaluation scripts, and leaderboard-ready task definitions so research and industry teams can compare models on realistic credit scenarios.
 
 [简体中文](./README_cn.md)
 
-## 🔥 News 
-- 【**2026. 03. 16**】✨ We released **FCMBench-V1.1**. This version adds English document images and corresponding QA pairs, expands the covered document types to 26, and increases the dataset to 5,198 images and 13,806 QA samples.
-- 【**2026. 01. 01**】We are proud to launch **FCMBench-V1.0**, which covers 18 core certificate types, including 4,043 privacy-compliant images and 8,446 QA samples. It involves 3 types of Perception tasks and 4 types of Reasoning tasks, which are cross-referenced with 10 categories of robustness inferences. All the tasks and inferences are derived from real-world critical scenarios.
+## Table of Contents
+- [Highlights](#highlights)
+- [News](#news)
+- [Tracks](#tracks)
+- [Quick Start](#quick-start)
+- [Leaderboard Submission](#leaderboard-submission)
+- [Resources](#resources)
+- [Citation](#citation)
+- [Contact](#contact)
 
-> **Status:** Public release (v1.1).  
-> **Maintainers:** [奇富科技 / Qfin Holdings](https://github.com/QFIN-tech)  
-> **Contact:** [yangyehuisw@126.com]
+## Highlights
+- **Real-world focus** for financial credit and document intelligence workflows.
+- **Multimodal evaluation** across image, video, speech, and agentic task directions.
+- **Public benchmark assets** including datasets, prompts, example predictions, and evaluation scripts.
+- **Leaderboard path** for submitting full-set results.
 
----
+## News
+- **2026-03-16**: Released **FCMBench v1.1**, adding English document images, more document types, and an expanded dataset with 5,198 images and 13,806 QA samples.
+- **2026-01-01**: Released **FCMBench v1.0**, covering 18 certificate types, 4,043 privacy-compliant images, 8,446 QA samples, 3 perception tasks, 4 reasoning tasks, and 10 robustness inference categories.
 
-## Tracks Overview
+## Tracks
+### 1. Vision-Language Track (available)
+Image-based financial document understanding.
 
-### 1) Vision-Language Track (✅ Available)
+- Entry: [vision_language](vision_language)
+- Inputs: document images plus text prompts in JSONL
+- Outputs: JSONL predictions, one sample per line
+- Evaluation: [vision_language/evaluation.py](vision_language/evaluation.py)
 
-Image-based financial document understanding: 
+### 2. Video Understanding Track (coming soon)
+### 3. Speech Understanding and Generation Track (coming soon)
+### 4. Multi-step / Agentic Track (coming soon)
 
-- **Entry:** [Vision-Language Track](vision_language)
-- **Inputs:** document images + text prompts (JSONL, one sample per line)
-- **Outputs:** text responses (JSONL, one sample per line)
-- **Evaluation:** [Evaluation Script](vision_language/evaluation.py)
+## Quick Start
+### Prerequisites
+- Python 3.10+
+- `uv` recommended, or `pip`
+- Downloaded image assets from ModelScope or Hugging Face
 
-#### Paper & Project Links
-- [**Paper (arXiv)**](https://arxiv.org/abs/2601.00150)
-- [**Paper (PDF)**](https://github.com/QFIN-tech/FCMBench/tree/main/TechnicalReport)
-- [**Project Page**](https://github.com/QFIN-tech/FCMBench/tree/main/vision_language)
-- [**Leaderboard**](https://qfin-tech.github.io/FCMBench)
-- [**Sample Data**](https://qfin-tech.github.io/FCMBench/Examples.html)
-- [**Dataset (ModelScope)**](https://modelscope.cn/datasets/QFIN/FCMBench-Data)
-- [**Dataset (Hugging Face)**](https://huggingface.co/datasets/QFIN/FCMBench-Data)
+### 1. Download the dataset
+- [ModelScope dataset](https://modelscope.cn/datasets/QFIN/FCMBench-Data)
+- [Hugging Face dataset](https://huggingface.co/datasets/QFIN/FCMBench-Data)
 
-#### Reference Model Demo
-We also provide access to an interactive demo of our Qfin-VL-Instruct model, which achieves strong performance on FCMBench.
-If you are interested in trying the Gradio demo, please contact [yangyehuisw@126.com] with the following information:
-- Name
-- Affiliation / Organization
-- Intended use (e.g., research exploration, benchmarking reference)
-- Contact email
+Unpack the image archive locally:
 
-Access will be granted on a case-by-case basis.
+```bash
+unzip FCMBench_v1.1_Images.zip
+```
 
-### 2) Video Understanding Track (🕒 Coming Soon)
+### 2. Review the track assets
+Useful files in `vision_language/`:
+- `README.md`, task-specific instructions
+- `example_api_request.py`, sample inference request
+- `prediction_results_example.jsonl`, output format example
+- `FCMBench_v1.1_testset_small.jsonl`, self-test subset with ground truth
+- `FCMBench_v1.1_testset_full.jsonl`, full evaluation file for submission
 
-### 3) Speech Understanding & Generation Track (🕒 Coming Soon)
+### 3. Install dependencies
+Using `uv`:
 
-### 4) Multi-step / Agentic Track (🕒 Coming Soon)
+```bash
+cd vision_language
+uv sync
+```
+
+Using `pip`:
+
+```bash
+cd vision_language
+pip install "openai>=2.14.0" "pandas>=2.3.3"
+```
+
+### 4. Run evaluation
+```bash
+python evaluation.py prediction_results_example.jsonl FCMBench_v1.1_testset_small.jsonl
+```
+
+The small test set is best for debugging and sanity checks before you generate full-set predictions.
+
+## Leaderboard Submission
+To join the official leaderboard:
+1. Run inference on `FCMBench_v1.1_testset_full.jsonl`.
+2. Save predictions as JSONL in the same format as the provided example.
+3. Email the result file with model details, inference settings, and post-processing notes.
+
+## Resources
+- [Paper on arXiv](https://arxiv.org/abs/2601.00150)
+- [Technical report PDFs](https://github.com/QFIN-tech/FCMBench/tree/main/TechnicalReport)
+- [Project page](https://github.com/QFIN-tech/FCMBench/tree/main/vision_language)
+- [Leaderboard](https://qfin-tech.github.io/FCMBench)
+- [Sample data](https://qfin-tech.github.io/FCMBench/Examples.html)
 
 ## Citation
-```
+```bibtex
 @misc{yang2026fcmbenchlargescalefinancialcredit,
-      title={FCMBench: The First Large-scale Financial Credit Multimodal Benchmark for Real-world Applications}, 
-      author={Yehui Yang and Dalu Yang and Fangxin Shang and Wenshuo Zhou and Jie Ren and Yifan Liu and Haojun Fei and Qing Yang and Yanwu Xu and Tao Chen},
-      year={2026},
-      eprint={2601.00150},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2601.00150}, 
+  title={FCMBench: The First Large-scale Financial Credit Multimodal Benchmark for Real-world Applications},
+  author={Yehui Yang and Dalu Yang and Fangxin Shang and Wenshuo Zhou and Jie Ren and Yifan Liu and Haojun Fei and Qing Yang and Yanwu Xu and Tao Chen},
+  year={2026},
+  eprint={2601.00150},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2601.00150}
 }
 ```
 
-## Star History
+## Contact
+Maintainer: [Qfin Holdings / 奇富科技](https://github.com/QFIN-tech)  
+Contact: `yangyehuisw@126.com`
 
+## Star History
 [![Star History Chart](https://api.star-history.com/svg?repos=QFIN-tech/FCMBench&type=date&legend=top-left)](https://www.star-history.com/#QFIN-tech/FCMBench&type=date&legend=top-left)
