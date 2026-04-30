@@ -36,7 +36,7 @@ Preview sample images and QA examples on the [Examples page](https://qfin-tech.g
 
 #### Reference Model Demo
 We also provide access to an interactive demo of our Qfin-VL-Instruct model, which achieves strong performance on FCMBench.
-If you are interested in trying the Gradio demo, please contact [yangyehui-jk@qifu.com] with the following information:
+If you are interested in trying the Gradio demo, please contact [yangyehuisw@126.com] with the following information:
 - Name
 - Affiliation / Organization
 - Intended use (e.g., research exploration, benchmarking reference)
@@ -66,9 +66,9 @@ Please refer to the [Video Understanding track README](video_understanding/READM
 
 **FCMBench (Vision-Language Track):**
 ```
-@misc{yang2026fcmbenchcomprehensivefinancialcredit,
-      title={FCMBench: A Comprehensive Financial Credit Multimodal Benchmark for Real-world Applications},
-      author={Yehui Yang and Dalu Yang and Wenshuo Zhou and Fangxin Shang and Yifan Liu and Jie Ren and Haojun Fei and Qing Yang and Yanwu Xu and Tao Chen},
+@misc{yang2026fcmbenchlargescalefinancialcredit,
+      title={FCMBench: The First Large-scale Financial Credit Multimodal Benchmark for Real-world Applications}, 
+      author={Yehui Yang and Dalu Yang and Fangxin Shang and Wenshuo Zhou and Jie Ren and Yifan Liu and Haojun Fei and Qing Yang and Yanwu Xu and Tao Chen},
       year={2026},
       eprint={2601.00150},
       archivePrefix={arXiv},
