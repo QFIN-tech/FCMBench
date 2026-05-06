@@ -20,7 +20,7 @@ Each video is a handheld recording of credit-review documents (2—4 per clip) a
 ```
 FCMBench-Video_v1.0_Videos/
 └── video/
-    ├── Construction/          # CN original videos (15 persons × 9 = 135 clips)
+    ├── Construction-cn/       # CN original videos (15 persons × 9 = 135 clips)
     ├── Construction-en-US/    # EN original videos (30 persons × 9 = 265 clips)
     ├── VPI-cn/                # CN videos with visual prompt injection (135 clips)
     ├── VPI-cot-cn/            # CN VPI + Chain-of-Thought (135 clips)
@@ -34,7 +34,6 @@ FCMBench-Video_v1.0_Videos/
 |------|-------------|--------|----------|
 | `FCMBench-Video_v1.0_full.jsonl` | Full 11,322 samples (CN + EN merged) | ✗ | Public release; run inference |
 | `FCMBench-Video_v1.0_small.jsonl` | Stratified 10% sample (~1,135) | ✓ | Quick self-evaluation / sanity check |
-| `FCMBench-Video_v1.0_full-gt.jsonl` | Full 11,322 samples | ✓ | Internal reference (not distributed) |
 
 **Tasks** (7 types across perception & reasoning):
 
@@ -80,7 +79,7 @@ The unzipped tree will look like:
 ```
 FCMBench-Video_v1.0_Videos/
 └── video/
-    ├── Construction/
+    ├── Construction-cn/
     ├── Construction-en-US/
     ├── VPI-cn/
     ├── VPI-cot-cn/
@@ -89,7 +88,7 @@ FCMBench-Video_v1.0_Videos/
 ```
 
 The instruction JSONL files use `video_prefix` + `video_path` fields (e.g.
-`"video_prefix": "Construction", "video_path": "yangyimiao/yangyimiao_20s_1.mp4"`),
+`"video_prefix": "Construction-cn", "video_path": "yangyimiao/yangyimiao_20s_1.mp4"`),
 so point `--video_root` to the `FCMBench-Video_v1.0_Videos/` directory.
 
 ### 2) Run inference
@@ -167,5 +166,4 @@ To have your model ranked on the **FCMBench-Video leaderboard**:
    - Inference framework (or API) and key settings (e.g., temperature, max tokens)
    - Any special post-processing applied (if applicable)
 
-After validation, we will compute the official metrics on the hidden ground-truth
-(`FCMBench-Video_v1.0_full-gt.jsonl`) and update the leaderboard.
+After validation, we will compute the official metrics on the hidden ground-truth and update the leaderboard.
