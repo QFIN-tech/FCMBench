@@ -20,7 +20,7 @@ FCMBench-Video v1.0 包含 **11,322** 组视频-问题对，覆盖 7 个任务�
 ```
 FCMBench-Video_v1.0_Videos/
 └── video/
-    ├── Construction/          # 中文原始视频（15 人 × 9 = 135 个片段）
+    ├── Construction-cn/       # 中文原始视频（15 人 × 9 = 135 个片段）
     ├── Construction-en-US/    # 英文原始视频（30 人 × 9 = 265 个片段）
     ├── VPI-cn/                # 中文视觉提示注入视频（135 个片段）
     ├── VPI-cot-cn/            # 中文 VPI + 思维链视频（135 个片段）
@@ -34,7 +34,6 @@ FCMBench-Video_v1.0_Videos/
 |------|------|:------:|------|
 | `FCMBench-Video_v1.0_full.jsonl` | 全量 11,322 条（中英文合并） | ✗ | 公开发布，用于推理 |
 | `FCMBench-Video_v1.0_small.jsonl` | 分层 10% 采样（~1,135 条） | ✓ | 快速自测 / 调试诊断 |
-| `FCMBench-Video_v1.0_full-gt.jsonl` | 全量 11,322 条 | ✓ | 内部参考（不分发） |
 
 **任务分布**（7 类，覆盖感知与推理）：
 
@@ -80,7 +79,7 @@ unzip FCMBench-Video_v1.0_Videos.zip
 ```
 FCMBench-Video_v1.0_Videos/
 └── video/
-    ├── Construction/
+    ├── Construction-cn/
     ├── Construction-en-US/
     ├── VPI-cn/
     ├── VPI-cot-cn/
@@ -89,7 +88,7 @@ FCMBench-Video_v1.0_Videos/
 ```
 
 指令文件的每条记录使用 `video_prefix` + `video_path` 来定位视频（例如：
-`"video_prefix": "Construction", "video_path": "yangyimiao/yangyimiao_20s_1.mp4"`），
+`"video_prefix": "Construction-cn", "video_path": "yangyimiao/yangyimiao_20s_1.mp4"`），
 因此将 `--video_root` 指向 `FCMBench-Video_v1.0_Videos/` 目录即可。
 
 ### 2) 运行推理
@@ -162,4 +161,4 @@ python benchmark_eval.py --result_dir ./results
    - 推理框架（或 API）及关键参数设置（如 temperature、max tokens 等）
    - 是否使用了特殊的后处理（如适用）
 
-我们验证通过后，会在隐藏的真值文件（`FCMBench-Video_v1.0_full-gt.jsonl`）上计算官方指标并更新排行榜。
+我们验证通过后，会在隐藏的真值文件上计算官方指标并更新排行榜。
