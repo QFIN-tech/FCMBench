@@ -81,7 +81,7 @@
 ```
 @misc{cui2026fcmbenchvideobenchmarkingdocumentvideo,
       title={FCMBench-Video: Benchmarking Document Video Intelligence}, 
-      author={Runze Cui and Fangxin Shang and Yehui Yang and Qing Yang and Tao Chen},
+      author={Runze Cui and Fangxin Shang and Yehui Yang and Qing Yang and Yanwu Xu and Tao Chen},
       year={2026},
       eprint={2604.25186},
       archivePrefix={arXiv},
